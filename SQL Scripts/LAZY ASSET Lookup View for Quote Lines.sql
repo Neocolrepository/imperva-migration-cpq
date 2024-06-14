@@ -1,0 +1,55 @@
+/* 
+	Who	When	What
+    	==========================================================================================
+	KB	020822	Initial view created
+	CM	021423	Reverted back to original table INTFUSER.TMP_AGR_DATA_PRD_ACT for Mock2
+*/
+
+--For Lookup1 Quote lines
+
+--CREATE or replace VIEW LAZY_CACHE_ASSET_TABLE_1 AS
+SELECT
+*
+FROM 
+INTFUSER.TMP_AGR_DATA_PRD_ACT T1
+JOIN
+S_RDR.CACHE_LOADSALESFORCEASSETS T2
+ON T1.ASSET_SF_ID = T2.Asset_Id;
+--WHERE T2.Asset_Id IS NOT NULL;
+
+
+
+--For Lookup2 Quote lines
+
+--CREATE or replace VIEW LAZY_CACHE_ASSET_TABLE_2 AS
+SELECT
+*
+FROM 
+INTFUSER.TMP_AGR_DATA_PRD_ACT T1
+JOIN
+S_RDR.CACHE_LOADSALESFORCEASSETS T2
+ON T1.ASSET_NUM = T2.Asset_Name;
+--WHERE T2.Asset_Id IS NOT NULL;
+
+
+--For Lookup1 In flight Quote lines
+
+--CREATE or replace VIEW LAZY_InFlight_ASSET_TABLE_1 AS
+SELECT
+*
+FROM 
+INTFUSER.TMP_AGR_DATA_PRD_QUT T1
+JOIN
+S_RDR.CACHE_LOADSALESFORCEASSETS T2
+ON T1.ASSET_SF_ID = T2.Asset_Id;
+
+--For Lookup2 In flight Quote lines
+
+--CREATE or replace VIEW LAZY_InFlight_ASSET_TABLE_2 AS
+SELECT
+*
+FROM 
+INTFUSER.TMP_AGR_DATA_PRD_QUT T1
+JOIN
+S_RDR.CACHE_LOADSALESFORCEASSETS T2
+ON T1.ASSET_NUM = T2.Asset_Name;

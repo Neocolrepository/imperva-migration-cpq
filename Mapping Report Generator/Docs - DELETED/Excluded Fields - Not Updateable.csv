@@ -1,0 +1,106 @@
+"object","aggregatable","aiPredictionField","autoNumber",byteLength,"calculated","caseSensitive","createable","custom","defaultedOnCreate","deprecatedAndHidden",digits,"filterable","groupable","idLookup","label",length,"name","nameField","namePointing","nillable","permissionable","polymorphicForeignKey",precision,"queryByDistance","restrictedPicklist",scale,"searchPrefilterable","soapType","sortable","type","unique","updateable","defaultValue","referenceTo","relationshipName","compoundFieldName","extraTypeInfo","active","externalId","picklist values","calculatedFormula","output"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","AccountManagerIsCurrentUser",0,"AccountManagerIsCurrentUser__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","double","false","false",,,,,,,,,"IF( $User.FirstName + "" "" + $User.LastName = TEXT(Opportunity.AccountManager__c), 1, 0 )","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","AppSec Split ACV",0,"AppSec_Split_ACV__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.AppSec_ACV_Formula__c  *  SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","CaseSafeID",1300,"CaseSafeID_OPSplit__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"CASESAFEID(Id)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","true","false","Commission Close Date",0,"Commission_Close_Date__c","false","false","true","true","false",0,"false","false",0,"false","xsd:date","true","date","false","false",,,,,,,,,"IF(CONTAINS( Sales_Team__c , 'Renewal'), Opportunity.Commission_Close_Date__c, Opportunity.CloseDate )","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Commission Type",1300,"Commission_Type__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"IF( CONTAINS(Deal_Owner__r.UserRole.Name, 'Renewal'), 'Renewal', 'Field')","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Commissionable Bookings Amount",0,"Commissionable_Bookings_Amount__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Commissionable_Bookings__c * Opportunity.Amount","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",18,"false","false","false","false","true","false",0,"true","true","false","Created By ID",18,"CreatedById","false","false","false","false","false",0,"false","false",0,"false","tns:ID","true","reference","false","false",,"User","CreatedBy",,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"false","false","false","false","true","false",0,"true","false","false","Created Date",0,"CreatedDate","false","false","false","false","false",0,"false","false",0,"false","xsd:dateTime","true","datetime","false","false",,,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","DataSec Split ACV",0,"DataSec_Split_ACV__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.DataSec_ACV_Formula__c  *  SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Deal Owner Sales Role",1300,"Deal_Owner_Sales_Role_OP_Split__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"TEXT(Deal_Owner__r.Sales_role__c)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","District",1300,"District__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Opportunity.Account.Territory__r.District__c","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",18,"false","false","false","false","true","false",0,"true","true","true","Opportunity Split ID",18,"Id","false","false","false","false","false",0,"false","false",0,"false","tns:ID","true","id","false","false",,,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","false",,"false",0,"true","false","false","true","true","false",0,"true","true","false","Is Split Territory Active",0,"Is_Split_Territory_Active__c","false","false","false","true","false",0,"false","false",0,"false","xsd:boolean","true","boolean","false","false",,,,,,,,,"Territory__r.Active__c","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","false",,"false",0,"false","false","false","false","true","false",0,"true","true","false","Deleted",0,"IsDeleted","false","false","false","false","false",0,"false","false",0,"false","xsd:boolean","true","boolean","false","false","false",,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",18,"false","false","false","false","true","false",0,"true","true","false","Last Modified By ID",18,"LastModifiedById","false","false","false","false","false",0,"false","false",0,"false","tns:ID","true","reference","false","false",,"User","LastModifiedBy",,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"false","false","false","false","true","false",0,"true","false","false","Last Modified Date",0,"LastModifiedDate","false","false","false","false","false",0,"false","false",0,"false","xsd:dateTime","true","datetime","false","false",,,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Non-Recurring Services Split ACV",0,"Non_Recurring_Services_Split_ACV__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Non_Recurring_Services_ACV__c  *  SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Other Split ACV",0,"Other_Split_ACV__c","false","false","true","true","false",18,"false","false",0,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Other_LoB_Amount__c *  SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Product Split",0,"Product__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Product_Amount__c *
+IF( Opportunity.Override_Splits_for_Renewals__c,
+IF( Sales_Team_Geo__c == 'WW-RENEWALS', 0, 1),
+SplitPercentage
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Recurring Services Split ACV",0,"Recurring_Services_Split_ACV__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Recurring_Services_ACV__c  *  SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Region Text Formula",1300,"Region_Text_Formula__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"CASE(
+TEXT(Sales_Team_Picklist__c),
+
+'APJ - ANZ', 'APJ',
+'APJ - China', 'APJ',
+'APJ - India', 'APJ',
+'APJ - Japan', 'APJ',
+'APJ - SEAK','APJ',
+'APJ - N Asia','APJ',
+
+'CALA', 'CALA',
+'CALA - Mexico', 'CALA',
+'CALA - Brazil', 'CALA',
+'CALA - MCA', 'CALA',
+
+'EMEA - DACH','EMEA',
+'EMEA - MEA','EMEA',
+'EMEA - UKI', 'EMEA',
+'EMEA - FR ES IT', 'EMEA',
+'EMEA - Emerging', 'EMEA',
+
+'NA - Commercial', 'North America',
+'NA - Territory Sales', 'North America',
+'NA - Central','North America',
+'NA - Northeast', 'North America',
+'NA - West','North America',
+'NA - Southeast','North America',
+'NA - Service Provider', 'North America',
+
+'APJ - Renewals', 'WW-Renewals',
+'EMEA - Renewals', 'WW-Renewals',
+'NA - Renewals', 'WW-Renewals',
+'CALA - Renewals', 'WW-Renewals',
+
+'Corporate', 'Corporate',
+
+'ERROR'
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Related SE ID",1300,"Related_SE_ID__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Related_SE__r.Case_Safe_ID__c","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Related SE Manager",1300,"Related_SE_Manager__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Related_SE__r.ManagerId","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Related SE Manager Name",1300,"Related_SE_Manager_Name__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Related_SE__r.ManagerName__c","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Related SE Role",1300,"Related_SE_Role__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Related_SE__r.UserRole.Name","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","RelatedSEIsCurrentUser",0,"RelatedSEIsCurrentUser__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","double","false","false",,,,,,,,,"IF($User.Id == Related_SE__c, 1, 0)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","RelatedSEManagerIsCurrentUser",0,"RelatedSEManagerIsCurrentUser__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","double","false","false",,,,,,,,,"IF( Related_SE_Manager__c == $User.Id, 1, 0 )","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Area Formula",1300,"Sales_Team__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"TEXT(Sales_Team_Picklist__c)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Region",1300,"Sales_Team_Geo__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Region_Text__c","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Service Split",0,"Service__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Service_Amount__c *
+IF( Opportunity.Override_Splits_for_Renewals__c,
+IF( Sales_Team_Geo__c == 'WW-RENEWALS', 0, 1),
+SplitPercentage
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Service ACV Split",0,"Service_ACV_Split_OPSplit__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Services_ACV__c * SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"true",765,"false","false","false","false","true","false",0,"true","false","true","Name",255,"Split","true","false","false","false","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Split ACV Formula",0,"Split_ACV_Formula__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"(Opportunity.First_Year_Amount__c * SplitPercentage)+(Opportunity.Services_ACV__c *SplitPercentage)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Split ACVE",0,"Split_ACVE__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Subscription_First_Year__c  + Service_ACV_Split_OPSplit__c + (( Support_First_Year__c  +  Product__c )/2)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Split TCV",0,"Split_Amount__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"SplitPercentage * Opportunity.Amount","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Split Pipeline Amount",0,"Split_Pipeline_Amount__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Pipeline_Amount__c * SplitPercentage","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"false","false","false","false","false","false",0,"true","false","false","Amount",0,"SplitAmount","false","false","true","false","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Subscription",0,"Subscription__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Subscription_Amount__c *
+IF( Opportunity.Override_Splits_for_Renewals__c,
+IF( Sales_Team_Geo__c == 'WW-RENEWALS', 1, 0),
+SplitPercentage
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Subscription First Year Split",0,"Subscription_First_Year__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Subscription_First_Year_Amount__c*
+IF( Opportunity.Override_Splits_for_Renewals__c,
+IF( Sales_Team_Geo__c == 'WW-RENEWALS', 1, 0),
+SplitPercentage
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Support",0,"Support__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Support_Amount__c *
+IF( Opportunity.Override_Splits_for_Renewals__c,
+IF( Sales_Team_Geo__c == 'WW-RENEWALS', 1, 0),
+SplitPercentage
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"true","false","false","true","false","false",0,"true","false","false","Support First Year Split",0,"Support_First_Year__c","false","false","true","true","false",18,"false","false",2,"false","xsd:double","true","currency","false","false",,,,,,,,,"Opportunity.Support_First_Year__c *
+IF( Opportunity.Override_Splits_for_Renewals__c,
+IF( Sales_Team_Geo__c == 'WW-RENEWALS', 1, 0),
+SplitPercentage
+)","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",0,"false","false","false","false","true","false",0,"true","false","false","System Modstamp",0,"SystemModstamp","false","false","false","false","false",0,"false","false",0,"false","xsd:dateTime","true","datetime","false","false",,,,,,,,,,"file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","true",,"false",3900,"true","false","false","true","false","false",0,"true","false","false","Territory ID",1300,"Territory_ID__c","false","false","true","true","false",0,"false","false",0,"false","xsd:string","true","string","false","false",,,,,,,,,"Territory__r.Id","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
+"OpportunitySplit","false",,"false",0,"true","false","false","true","true","false",0,"true","true","false","Territory Validation",0,"Territory_Validation__c","false","false","false","true","false",0,"false","false",0,"false","xsd:boolean","true","boolean","false","false",,,,,,,,,"Territory__c == Opportunity.Account.Territory__c","file:///D:/imperva-migration-cpq/Mapping%20Report%20Generator/Docs - DELETED/"
