@@ -38,7 +38,7 @@
     </parameter>
     <parameter>
       <name>Run_Mapping_Delta</name>
-      <default_value>false</default_value>
+      <default_value>true</default_value>
       <description>If executing a mapping doc update, true / If creating a new mapping doc false.</description>
     </parameter>
     <parameter>
