@@ -456,31 +456,57 @@
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
+    <notepad>
+      <note>Actual SOQL to use:
+
+SELECT Id, OpportunityId, NEO_OpptySplit_Migration_External_ID__c, NEO_Migrated_Record__c
+ FROM OpportunitySplit 
+  WHERE NEO_Migrated_Record__c = TRUE 
+  AND NEO_OpptySplit_Migration_External_ID__c != NULL</note>
+      <xloc>48</xloc>
+      <yloc>432</yloc>
+      <width>569</width>
+      <heigth>106</heigth>
+      <fontname>Tahoma</fontname>
+      <fontsize>13</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <order>
     <hop>
-      <from>CACHE - SELECT - Migrated Assets</from>
-      <to>DELETE - Migrated Assets</to>
+      <from>CACHE - SELECT - Migrated Opportunity Splits</from>
+      <to>DELETE - Migrated Opportunity Splits</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DELETE - Migrated Assets</from>
-      <to>FALLOUT - DELETE - Migrated Assets</to>
+      <from>DELETE - Migrated Opportunity Splits</from>
+      <to>FALLOUT - DELETE - Migrated Opportunity Splits</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DELETE - Migrated Assets</from>
-      <to>SUCCESS - DELETE - Migrated Assets</to>
+      <from>DELETE - Migrated Opportunity Splits</from>
+      <to>SUCCESS - DELETE - Migrated Opportunity Splits</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SELECT - Migrated Opportunity Splits</from>
-      <to>CACHE - SELECT - Migrated Assets</to>
+      <to>CACHE - SELECT - Migrated Opportunity Splits</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>CACHE - SELECT - Migrated Assets</name>
+    <name>CACHE - SELECT - Migrated Opportunity Splits</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -504,7 +530,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/CACHE/CACHE - SELECT - Migrated Assets</name>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/CACHE/CACHE - SELECT - Migrated Opportunity Splits</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -529,8 +555,8 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
+        <trim_type>none</trim_type>
+        <length>18</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -541,8 +567,8 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
+        <trim_type>none</trim_type>
+        <length>18</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -553,8 +579,8 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
+        <trim_type>none</trim_type>
+        <length>18</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -565,7 +591,7 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -585,7 +611,7 @@
     </GUI>
   </step>
   <step>
-    <name>DELETE - Migrated Assets</name>
+    <name>DELETE - Migrated Opportunity Splits</name>
     <type>SalesforceDelete</type>
     <description/>
     <distribute>N</distribute>
@@ -619,7 +645,7 @@
     </GUI>
   </step>
   <step>
-    <name>FALLOUT - DELETE - Migrated Assets</name>
+    <name>FALLOUT - DELETE - Migrated Opportunity Splits</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>N</distribute>
@@ -643,7 +669,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - DELETE - Migrated Assets</name>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - DELETE - Migrated Opportunity Splits</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -791,11 +817,10 @@
     <condition>NEO_OpptySplit_Migration_External_ID__c != '' 
 AND NEO_Migrated_Record__c = true 
 </condition>
-    <specifyQuery>N</specifyQuery>
-    <query>SELECT Id, NEO_Migrated_Record__c, NEO_OpptySplit_Migration_External_ID__c 
+    <specifyQuery>Y</specifyQuery>
+    <query>SELECT Id, OpportunityId, NEO_OpptySplit_Migration_External_ID__c, NEO_Migrated_Record__c
  FROM OpportunitySplit 
- WHERE NEO_Migrated_Record__c = TRUE 
- AND NEO_OpptySplit_Migration_External_ID__c != NULL</query>
+  </query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
     <include_module>N</include_module>
@@ -886,7 +911,7 @@ AND NEO_Migrated_Record__c = true
     </GUI>
   </step>
   <step>
-    <name>SUCCESS - DELETE - Migrated Assets</name>
+    <name>SUCCESS - DELETE - Migrated Opportunity Splits</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>N</distribute>
@@ -910,7 +935,7 @@ AND NEO_Migrated_Record__c = true
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/SUCCESS/SUCCESS - DELETE - Migrated Assets</name>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/SUCCESS/SUCCESS - DELETE - Migrated Opportunity Splits</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -992,8 +1017,8 @@ AND NEO_Migrated_Record__c = true
   </step>
   <step_error_handling>
     <error>
-      <source_step>DELETE - Migrated Assets</source_step>
-      <target_step>FALLOUT - DELETE - Migrated Assets</target_step>
+      <source_step>DELETE - Migrated Opportunity Splits</source_step>
+      <target_step>FALLOUT - DELETE - Migrated Opportunity Splits</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename>number of errors</nr_valuename>
       <descriptions_valuename>error descriptions</descriptions_valuename>

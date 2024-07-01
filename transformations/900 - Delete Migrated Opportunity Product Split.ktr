@@ -474,7 +474,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SELECT - Migrated Contracts</from>
+      <from>SELECT - Migrated OpptyLineItemSplit</from>
       <to>CACHE - SELECT - Migrated Contracts</to>
       <enabled>Y</enabled>
     </hop>
@@ -700,7 +700,7 @@
     </GUI>
   </step>
   <step>
-    <name>SELECT - Migrated Contracts</name>
+    <name>SELECT - Migrated OpptyLineItemSplit</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -710,17 +710,17 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_NEO__CPQ__URL}</targeturl>
-    <username>${SF_NEO__CPQ__USERNAME}</username>
-    <password>${SF_NEO__CPQ__PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
+    <username>${SF_IMPERVA_DEV_USERNAME}</username>
+    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
-    <module>Contract</module>
-    <condition>NEO_Contract_Migration_External_ID__c != '' 
-AND NEO_Migrated_Record__c = true 
-AND NEO_Migration_Scenario__c = 'Active Contracts' </condition>
-    <specifyQuery>N</specifyQuery>
-    <query/>
+    <module>OpportunityLineItemSplit</module>
+    <condition>NEO_Migrated_Record__c = true 
+</condition>
+    <specifyQuery>Y</specifyQuery>
+    <query>SELECT Id, NEO_Migrated_Record__c, NEO_OpptyLISplit_Migration_External_ID__c
+ FROM OpportunityLineItemSplit</query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
     <include_module>N</include_module>
@@ -738,20 +738,6 @@ AND NEO_Migration_Scenario__c = 'Active Contracts' </condition>
     <records_filter>all</records_filter>
     <queryAll>N</queryAll>
     <fields>
-      <field>
-        <name>Id</name>
-        <field>Id</field>
-        <idlookup>N</idlookup>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
     </fields>
     <limit>0</limit>
     <attributes/>
