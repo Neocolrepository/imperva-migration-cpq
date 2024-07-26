@@ -437,7 +437,7 @@
   <notepads>
     <notepad>
       <note>Start</note>
-      <xloc>96</xloc>
+      <xloc>64</xloc>
       <yloc>448</yloc>
       <width>70</width>
       <heigth>35</heigth>
@@ -458,7 +458,7 @@
     </notepad>
     <notepad>
       <note>Neocol CPQ</note>
-      <xloc>48</xloc>
+      <xloc>16</xloc>
       <yloc>16</yloc>
       <width>150</width>
       <heigth>26</heigth>
@@ -479,8 +479,8 @@
     </notepad>
     <notepad>
       <note>Retry: UPSERT - OpportunitySplit</note>
-      <xloc>4160</xloc>
-      <yloc>432</yloc>
+      <xloc>4672</xloc>
+      <yloc>400</yloc>
       <width>200</width>
       <heigth>25</heigth>
       <fontname>Consolas</fontname>
@@ -500,7 +500,7 @@
     </notepad>
     <notepad>
       <note>This has minimal fields</note>
-      <xloc>5968</xloc>
+      <xloc>6304</xloc>
       <yloc>624</yloc>
       <width>148</width>
       <heigth>26</heigth>
@@ -522,7 +522,7 @@
     <notepad>
       <note>NEO_Migrated_Record__c = true 
 AND NEO_OpptySplit_Migration_External_ID__c != ''</note>
-      <xloc>3776</xloc>
+      <xloc>4112</xloc>
       <yloc>32</yloc>
       <width>329</width>
       <heigth>42</heigth>
@@ -545,9 +545,9 @@ AND NEO_OpptySplit_Migration_External_ID__c != ''</note>
       <note>7/11/24: We need to run an Insert AND an Update.
 
 * Make sure MySQL has the latest records from Salesforce to feed the views
-* Insert Where Deal_Owner__c != SplitOwnerId
-* Update Where Deal_Owner__c = SplitOwnerId</note>
-      <xloc>80</xloc>
+* Update the existing records first so we can lower their percent
+* Insert the new records so we can ensure we have all the lines.</note>
+      <xloc>48</xloc>
       <yloc>160</yloc>
       <width>481</width>
       <heigth>95</heigth>
@@ -569,7 +569,7 @@ AND NEO_OpptySplit_Migration_External_ID__c != ''</note>
     <notepad>
       <note>Records Already Inserted head South. 
 They just need to be updated</note>
-      <xloc>1376</xloc>
+      <xloc>1712</xloc>
       <yloc>672</yloc>
       <width>243</width>
       <heigth>42</heigth>
@@ -591,7 +591,7 @@ They just need to be updated</note>
     <notepad>
       <note>Records that don't match head East.
 They need to be created.</note>
-      <xloc>1456</xloc>
+      <xloc>1792</xloc>
       <yloc>448</yloc>
       <width>231</width>
       <heigth>42</heigth>
@@ -611,11 +611,13 @@ They need to be created.</note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Checking for NULL Deal_Owner__c just in case</note>
-      <xloc>800</xloc>
-      <yloc>464</yloc>
-      <width>295</width>
-      <heigth>26</heigth>
+      <note>Checking for NULL 
+Deal_Owner__c just 
+in case</note>
+      <xloc>752</xloc>
+      <yloc>432</yloc>
+      <width>134</width>
+      <heigth>58</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
@@ -635,32 +637,10 @@ They need to be created.</note>
       <note>This is for updating the one record that SF generated
 when it created these initially. Last one in won, so we
 need to update that record to the correct values.</note>
-      <xloc>1776</xloc>
+      <xloc>2112</xloc>
       <yloc>896</yloc>
       <width>331</width>
       <heigth>58</heigth>
-      <fontname>.AppleSystemUIFont</fontname>
-      <fontsize>13</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>May need to bump this up, but with so 
-few records to be inserted, it might not be worth it.</note>
-      <xloc>4320</xloc>
-      <yloc>608</yloc>
-      <width>318</width>
-      <heigth>42</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
@@ -797,11 +777,6 @@ few records to be inserted, it might not be worth it.</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>CACHE - Opportunity Splits</from>
-      <to>FILTER - Skip Existing OpportunitySplit?</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>LOOKUP - Line ~ Opportunity</from>
       <to>FILTER - Line ~ Opportunity</to>
       <enabled>Y</enabled>
@@ -814,11 +789,6 @@ few records to be inserted, it might not be worth it.</note>
     <hop>
       <from>SELECT - Opportunity</from>
       <to>LOOKUP - Line ~ Opportunity</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>SPLIT - UPSERT - OpportunitySplit</from>
-      <to>INSERT - OpportunitySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -862,11 +832,6 @@ few records to be inserted, it might not be worth it.</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>FILTER - Deal_Owner__c ~ ''</from>
-      <to>FILTER - Deal_Owner__c != SplitOwnerId</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>FILTER - Deal_Owner__c != SplitOwnerId</from>
       <to>LOOKUP - Line ~ User</to>
       <enabled>Y</enabled>
@@ -893,22 +858,17 @@ few records to be inserted, it might not be worth it.</note>
     </hop>
     <hop>
       <from>SORT - Opportunity.Id </from>
-      <to>Windcatcher</to>
+      <to>Records to Update</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Windcatcher</from>
+      <from>Records to Update</from>
       <to>UPDATE - OpportunitySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SORT - Opportunity.Id</from>
       <to>REMOVE New.Field</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>REMOVE New.Field</from>
-      <to>CACHE - Opportunity Splits</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -929,6 +889,36 @@ few records to be inserted, it might not be worth it.</note>
     <hop>
       <from>PIN - Contract Exists</from>
       <to>SUCCESS - INSERT - OpportunitySplit</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Windcatcher </from>
+      <to>DEBUG - Picklist Test</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>DEBUG - Picklist Test</from>
+      <to>FILTER - Deal_Owner__c != SplitOwnerId</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>FILTER - Deal_Owner__c ~ ''</from>
+      <to>Windcatcher </to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SPLIT - UPSERT - OpportunitySplit</from>
+      <to>Wait for UPDATE Step</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Wait for UPDATE Step</from>
+      <to>INSERT - OpportunitySplit</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>REMOVE New.Field</from>
+      <to>FILTER - Skip Existing OpportunitySplit?</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -958,269 +948,8 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3968</xloc>
+      <xloc>4304</xloc>
       <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>CACHE - Opportunity Splits</name>
-    <type>TextFileOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>Y</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>${SF_NEO__CPQ__CACHE}/${Internal.Transformation.Name}/CACHE/CACHE - Opportunity Splits</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>csv</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>Source.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Split__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Deal_Owner__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Opportunity__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Commissionable_Bookings__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.CreatedById</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.CreatedDate</name>
-        <type>Timestamp</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Distributor_PAE__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Reseller_PAE__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.First_Year_Split_Amount_Service__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Region_Text__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Sales_Team_Picklist__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.CaseSafeID_OPSplit__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Territory__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Trigger_Territory_Update__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.TRUE</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Target.SplitOwnerId]</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>3440</xloc>
-      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1288,7 +1017,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3680</xloc>
+      <xloc>4016</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1387,7 +1116,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
+      <xloc>592</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1412,7 +1141,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>6224</xloc>
+      <xloc>6560</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1604,6 +1333,18 @@ few records to be inserted, it might not be worth it.</note>
         <precision>-1</precision>
       </field>
       <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>Source.CaseSafeID_OPSplit__c</name>
         <type>String</type>
         <format/>
@@ -1629,6 +1370,18 @@ few records to be inserted, it might not be worth it.</note>
       </field>
       <field>
         <name>Source.Trigger_Territory_Update__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
         <type>Boolean</type>
         <format/>
         <currency/>
@@ -1721,7 +1474,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4240</xloc>
+      <xloc>4736</xloc>
       <yloc>672</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1776,8 +1529,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1788,8 +1541,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1800,8 +1553,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>63</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1812,8 +1565,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>63</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1824,8 +1577,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1836,8 +1589,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1848,8 +1601,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1860,8 +1613,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1872,8 +1625,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>63</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1884,8 +1637,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>63</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1896,8 +1649,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1908,8 +1661,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>0</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1920,8 +1673,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1932,8 +1685,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1944,8 +1697,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1956,8 +1709,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1968,8 +1721,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>63</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1980,8 +1733,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>63</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -1992,8 +1745,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>255</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2004,8 +1757,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>255</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2016,8 +1769,20 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>255</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2028,8 +1793,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>255</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2040,8 +1805,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>16383</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2052,8 +1817,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>16383</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2064,8 +1829,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2076,8 +1841,8 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>18</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -2088,7 +1853,7 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -2100,7 +1865,7 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -2112,45 +1877,45 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
         <name>CONSTANT.0</name>
         <type>Integer</type>
-        <format/>
+        <format>0</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>CONSTANT.1</name>
         <type>Integer</type>
-        <format/>
+        <format>0</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>CONSTANT.12</name>
         <type>Integer</type>
-        <format/>
+        <format>0</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
       </field>
       <field>
         <name>CONSTANT.BLANK</name>
@@ -2160,7 +1925,7 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -2172,7 +1937,7 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -2184,7 +1949,7 @@ few records to be inserted, it might not be worth it.</note>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -2198,7 +1963,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>928</xloc>
+      <xloc>800</xloc>
       <yloc>656</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2498,6 +2263,18 @@ few records to be inserted, it might not be worth it.</note>
         <precision>-1</precision>
       </field>
       <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>New.Sales_Team_Picklist__c</name>
         <type>String</type>
         <format/>
@@ -2735,8 +2512,545 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2608</xloc>
+      <xloc>2944</xloc>
       <yloc>640</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>FALLOUT - UPDATE - OpportunitySplit</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>Y</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - UPDATE - OpportunitySplit</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>Source.Id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Split__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.SplitPercentage</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Deal_Owner__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.SplitOwnerId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Opportunity__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.OpportunityId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Commissionable_Bookings__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Commissionable_Bookings__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.CreatedById</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.CreatedDate</name>
+        <type>Timestamp</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Distributor_PAE__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Distributor_PAE__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Reseller_PAE__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Reseller_PAE__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.First_Year_Split_Amount_Service__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Split_ACV__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Region_Text__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Region_Text__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Sales_Team_Picklist__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Sales_Team_Picklist__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.CaseSafeID_OPSplit__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.CaseSafeID_OPSplit__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Territory__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Territory__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source.Trigger_Territory_Update__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Trigger_Territory_Update__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.0</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.1</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.12</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.BLANK</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.FALSE</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.TRUE</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Num Errors</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Error Desc</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Error Field</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Error Code</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2224</xloc>
+      <yloc>1216</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2775,7 +3089,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1344</xloc>
+      <xloc>1680</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2791,7 +3105,7 @@ few records to be inserted, it might not be worth it.</note>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>FILTER - Deal_Owner__c != SplitOwnerId</send_true_to>
+    <send_true_to>Windcatcher </send_true_to>
     <send_false_to>FALLOUT - Line ⇎ Deal_Owner__c</send_false_to>
     <compare>
       <condition>
@@ -2815,7 +3129,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>928</xloc>
+      <xloc>800</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2850,7 +3164,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2608</xloc>
+      <xloc>2944</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2906,7 +3220,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1968</xloc>
+      <xloc>2304</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2941,7 +3255,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3968</xloc>
+      <xloc>4304</xloc>
       <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2985,7 +3299,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3680</xloc>
+      <xloc>4016</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2996,7 +3310,7 @@ few records to be inserted, it might not be worth it.</note>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
-    <copies>1</copies>
+    <copies>10</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
@@ -3062,7 +3376,7 @@ few records to be inserted, it might not be worth it.</note>
       </field>
       <field>
         <name>Sales_Team_Picklist__c</name>
-        <field>Source.Sales_Team_Picklist__c</field>
+        <field>Source_Corrected_Sales_Team_Picklist</field>
         <useExternalId>N</useExternalId>
       </field>
       <field>
@@ -3101,7 +3415,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4240</xloc>
+      <xloc>4736</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3143,7 +3457,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2400</xloc>
+      <xloc>2736</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3203,7 +3517,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1808</xloc>
+      <xloc>2144</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3226,8 +3540,8 @@ few records to be inserted, it might not be worth it.</note>
     <integer_pair>N</integer_pair>
     <lookup>
       <key>
-        <name>NEO_OpptySplit_Migration_External_ID__c</name>
-        <field>Migrated.OpptySplit.Id</field>
+        <name>Source.Id</name>
+        <field>migrated.NEO_OpptySplit_Migration_External_ID__c</field>
       </key>
       <value>
         <name>Migrated.OpptySplit.Id</name>
@@ -3245,7 +3559,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3680</xloc>
+      <xloc>4016</xloc>
       <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3270,7 +3584,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2176</xloc>
+      <xloc>2512</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3295,7 +3609,7 @@ few records to be inserted, it might not be worth it.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4736</xloc>
+      <xloc>5248</xloc>
       <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3334,6 +3648,7 @@ few records to be inserted, it might not be worth it.</note>
 , `Source.Region_Text__c`
 , `New.Region_Text__c`
 , `Source.Sales_Team_Picklist__c`
+, Source_Corrected_Sales_Team_Picklist
 , `New.Sales_Team_Picklist__c`
 , `Source.CaseSafeID_OPSplit__c`
 , `New.CaseSafeID_OPSplit__c`
@@ -3836,6 +4151,29 @@ FROM multi_opptysplit_upload__v
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>READ - Multi_OpptySplit_Upload__v</origin>
+        <comments>Source_Corrected_Sales_Team_Picklist</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Los_Angeles</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
         <name>New.Sales_Team_Picklist__c</name>
         <length>255</length>
         <precision>-1</precision>
@@ -4004,7 +4342,7 @@ FROM multi_opptysplit_upload__v
       </output>
     </remotesteps>
     <GUI>
-      <xloc>160</xloc>
+      <xloc>128</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -4827,8 +5165,105 @@ FROM multi_opptysplit_upload__v
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
+      <xloc>176</xloc>
       <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>REMOVE New.Field</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>CONSTANT.0</name>
+      </remove>
+      <remove>
+        <name>CONSTANT.1</name>
+      </remove>
+      <remove>
+        <name>CONSTANT.12</name>
+      </remove>
+      <remove>
+        <name>CONSTANT.BLANK</name>
+      </remove>
+      <remove>
+        <name>CONSTANT.FALSE</name>
+      </remove>
+      <remove>
+        <name>New.CaseSafeID_OPSplit__c</name>
+      </remove>
+      <remove>
+        <name>New.Commissionable_Bookings__c</name>
+      </remove>
+      <remove>
+        <name>New.Distributor_PAE__c</name>
+      </remove>
+      <remove>
+        <name>New.Id</name>
+      </remove>
+      <remove>
+        <name>New.OpportunityId</name>
+      </remove>
+      <remove>
+        <name>New.Region_Text__c</name>
+      </remove>
+      <remove>
+        <name>New.Reseller_PAE__c</name>
+      </remove>
+      <remove>
+        <name>New.Sales_Team_Picklist__c</name>
+      </remove>
+      <remove>
+        <name>New.SplitOwnerId</name>
+      </remove>
+      <remove>
+        <name>New.SplitPercentage</name>
+      </remove>
+      <remove>
+        <name>New.Split_ACV__c</name>
+      </remove>
+      <remove>
+        <name>New.Territory__c</name>
+      </remove>
+      <remove>
+        <name>New.Trigger_Territory_Update__c</name>
+      </remove>
+      <remove>
+        <name>Opportunity.Id</name>
+      </remove>
+      <remove>
+        <name>User.AccountId</name>
+      </remove>
+      <remove>
+        <name>User.Id</name>
+      </remove>
+      <remove>
+        <name>User.IsActive</name>
+      </remove>
+      <remove>
+        <name>User.Name</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>3616</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4851,7 +5286,7 @@ FROM multi_opptysplit_upload__v
         <currency/>
         <decimal/>
         <group/>
-        <nullif>false</nullif>
+        <nullif>true</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -4866,7 +5301,7 @@ FROM multi_opptysplit_upload__v
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
+      <xloc>416</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -5166,6 +5601,18 @@ FROM multi_opptysplit_upload__v
         <precision>-1</precision>
       </field>
       <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>New.Sales_Team_Picklist__c</name>
         <type>String</type>
         <format/>
@@ -5391,8 +5838,116 @@ FROM multi_opptysplit_upload__v
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1968</xloc>
+      <xloc>2304</xloc>
       <yloc>640</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Rename OpportunitySplit.Id</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Source.Id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Split__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Deal_Owner__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Opportunity__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Commissionable_Bookings__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.CreatedById</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.CreatedDate</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Distributor_PAE__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Reseller_PAE__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.First_Year_Split_Amount_Service__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Region_Text__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Sales_Team_Picklist__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.CaseSafeID_OPSplit__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Territory__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>Source.Trigger_Territory_Update__c</name>
+        <rename/>
+      </field>
+      <field>
+        <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
+        <rename/>
+      </field>
+      <field>
+        <name>CONSTANT.TRUE</name>
+        <rename/>
+      </field>
+      <field>
+        <name>[Target.SplitOwnerId]</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OpportunitySplit.Id</name>
+        <rename>Migrated.OpptySplit.Id</rename>
+      </field>
+      <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>4976</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -5460,7 +6015,7 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2400</xloc>
+      <xloc>2736</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
@@ -5555,7 +6110,7 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3680</xloc>
+      <xloc>4016</xloc>
       <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
@@ -5666,7 +6221,7 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1808</xloc>
+      <xloc>2144</xloc>
       <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
@@ -5707,8 +6262,92 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2848</xloc>
+      <xloc>3184</xloc>
       <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>SORT - Opportunity.Id</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>Opportunity.Id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>3408</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>SORT - Opportunity.Id </name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>Source.Opportunity__c</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1680</xloc>
+      <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -5732,7 +6371,7 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3968</xloc>
+      <xloc>4304</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -6007,6 +6646,18 @@ FROM Opportunity </query>
         <length>-1</length>
         <precision>-1</precision>
       </field>
+      <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -6017,737 +6668,8 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4736</xloc>
+      <xloc>5248</xloc>
       <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Windcatcher</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>1072</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>UPDATE - OpportunitySplit</name>
-    <type>SalesforceUpdate</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>10</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
-    <timeout>60000</timeout>
-    <useCompression>Y</useCompression>
-    <module>OpportunitySplit</module>
-    <batchSize>10</batchSize>
-    <fields>
-      <field>
-        <name>Id</name>
-        <field>New.Id</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Commissionable_Bookings__c</name>
-        <field>Source.Commissionable_Bookings__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Deal_Owner__c</name>
-        <field>Source.Deal_Owner__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Distributor_PAE__c</name>
-        <field>Source.Distributor_PAE__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Split_ACV__c</name>
-        <field>Source.First_Year_Split_Amount_Service__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Region_Text__c</name>
-        <field>Source.Region_Text__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Reseller_PAE__c</name>
-        <field>Source.Reseller_PAE__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Sales_Team_Picklist__c</name>
-        <field>Source.Sales_Team_Picklist__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>SplitPercentage</name>
-        <field>Source.Split__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>Territory__c</name>
-        <field>Source.Territory__c</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>NEO_Migrated_Record__c</name>
-        <field>CONSTANT.TRUE</field>
-        <useExternalId>N</useExternalId>
-      </field>
-      <field>
-        <name>NEO_OpptySplit_Migration_External_Id__c</name>
-        <field>Source.Id</field>
-        <useExternalId>N</useExternalId>
-      </field>
-    </fields>
-    <rollbackAllChangesOnError>N</rollbackAllChangesOnError>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1888</xloc>
-      <yloc>1072</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>SORT - Opportunity.Id</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Opportunity.Id</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>3072</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>SORT - Opportunity.Id </name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Source.Opportunity__c</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>784</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>FALLOUT - UPDATE - OpportunitySplit</name>
-    <type>TextFileOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>Y</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - UPDATE - OpportunitySplit</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>csv</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>Source.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Split__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.SplitPercentage</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Deal_Owner__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.SplitOwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Opportunity__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.OpportunityId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Commissionable_Bookings__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Commissionable_Bookings__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.CreatedById</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.CreatedDate</name>
-        <type>Timestamp</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Distributor_PAE__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Distributor_PAE__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Reseller_PAE__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Reseller_PAE__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.First_Year_Split_Amount_Service__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Split_ACV__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Region_Text__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Region_Text__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Sales_Team_Picklist__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Sales_Team_Picklist__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.CaseSafeID_OPSplit__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.CaseSafeID_OPSplit__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Territory__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Territory__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Source.Trigger_Territory_Update__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>New.Trigger_Territory_Update__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.0</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.1</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.12</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.BLANK</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.FALSE</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.TRUE</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Num Errors</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Error Desc</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Error Field</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Error Code</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1888</xloc>
-      <yloc>1216</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7046,6 +6968,18 @@ FROM Opportunity </query>
         <precision>-1</precision>
       </field>
       <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>New.Sales_Team_Picklist__c</name>
         <type>String</type>
         <format/>
@@ -7223,14 +7157,109 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2192</xloc>
+      <xloc>2528</xloc>
       <yloc>1072</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>REMOVE New.Field</name>
-    <type>SelectValues</type>
+    <name>UPDATE - OpportunitySplit</name>
+    <type>SalesforceUpdate</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>10</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
+    <username>${SF_IMPERVA_DEV_USERNAME}</username>
+    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <timeout>60000</timeout>
+    <useCompression>Y</useCompression>
+    <module>OpportunitySplit</module>
+    <batchSize>10</batchSize>
+    <fields>
+      <field>
+        <name>Id</name>
+        <field>New.Id</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Commissionable_Bookings__c</name>
+        <field>Source.Commissionable_Bookings__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Deal_Owner__c</name>
+        <field>Source.Deal_Owner__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Distributor_PAE__c</name>
+        <field>Source.Distributor_PAE__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Split_ACV__c</name>
+        <field>Source.First_Year_Split_Amount_Service__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Region_Text__c</name>
+        <field>Source.Region_Text__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Reseller_PAE__c</name>
+        <field>Source.Reseller_PAE__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Sales_Team_Picklist__c</name>
+        <field>Source_Corrected_Sales_Team_Picklist</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>SplitPercentage</name>
+        <field>Source.Split__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>Territory__c</name>
+        <field>Source.Territory__c</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>NEO_Migrated_Record__c</name>
+        <field>CONSTANT.TRUE</field>
+        <useExternalId>N</useExternalId>
+      </field>
+      <field>
+        <name>NEO_OpptySplit_Migration_External_Id__c</name>
+        <field>Source.Id</field>
+        <useExternalId>N</useExternalId>
+      </field>
+    </fields>
+    <rollbackAllChangesOnError>N</rollbackAllChangesOnError>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2224</xloc>
+      <yloc>1072</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Records to Update</name>
+    <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -7239,77 +7268,35 @@ FROM Opportunity </query>
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1680</xloc>
+      <yloc>1072</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Value mapper</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <field_to_use/>
+    <target_field/>
+    <non_match_default/>
     <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>CONSTANT.0</name>
-      </remove>
-      <remove>
-        <name>CONSTANT.1</name>
-      </remove>
-      <remove>
-        <name>CONSTANT.12</name>
-      </remove>
-      <remove>
-        <name>CONSTANT.BLANK</name>
-      </remove>
-      <remove>
-        <name>CONSTANT.FALSE</name>
-      </remove>
-      <remove>
-        <name>New.CaseSafeID_OPSplit__c</name>
-      </remove>
-      <remove>
-        <name>New.Commissionable_Bookings__c</name>
-      </remove>
-      <remove>
-        <name>New.Distributor_PAE__c</name>
-      </remove>
-      <remove>
-        <name>New.Id</name>
-      </remove>
-      <remove>
-        <name>New.OpportunityId</name>
-      </remove>
-      <remove>
-        <name>New.Region_Text__c</name>
-      </remove>
-      <remove>
-        <name>New.Reseller_PAE__c</name>
-      </remove>
-      <remove>
-        <name>New.Sales_Team_Picklist__c</name>
-      </remove>
-      <remove>
-        <name>New.SplitOwnerId</name>
-      </remove>
-      <remove>
-        <name>New.SplitPercentage</name>
-      </remove>
-      <remove>
-        <name>New.Split_ACV__c</name>
-      </remove>
-      <remove>
-        <name>New.Territory__c</name>
-      </remove>
-      <remove>
-        <name>New.Trigger_Territory_Update__c</name>
-      </remove>
-      <remove>
-        <name>Opportunity.Id</name>
-      </remove>
-      <remove>
-        <name>User.AccountId</name>
-      </remove>
-      <remove>
-        <name>User.Id</name>
-      </remove>
-      <remove>
-        <name>User.IsActive</name>
-      </remove>
-      <remove>
-        <name>User.Name</name>
-      </remove>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -7320,14 +7307,39 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3248</xloc>
+      <xloc>1120</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Windcatcher </name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1104</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Rename OpportunitySplit.Id</name>
-    <type>SelectValues</type>
+    <name>DEBUG - Picklist Test</name>
+    <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -7336,84 +7348,469 @@ FROM Opportunity </query>
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>Y</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/DEBUG/DEBUG - Picklist Test</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
     <fields>
       <field>
         <name>Source.Id</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Split__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.SplitPercentage</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Deal_Owner__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.SplitOwnerId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Opportunity__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.OpportunityId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Commissionable_Bookings__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Commissionable_Bookings__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.CreatedById</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.CreatedDate</name>
-        <rename/>
+        <type>Timestamp</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Distributor_PAE__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Distributor_PAE__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Reseller_PAE__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Reseller_PAE__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.First_Year_Split_Amount_Service__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Split_ACV__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Region_Text__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Region_Text__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Sales_Team_Picklist__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Source_Corrected_Sales_Team_Picklist</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Sales_Team_Picklist__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.CaseSafeID_OPSplit__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.CaseSafeID_OPSplit__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Territory__c</name>
-        <rename/>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Territory__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>Source.Trigger_Territory_Update__c</name>
-        <rename/>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>New.Trigger_Territory_Update__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
-        <rename/>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.0</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.1</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.12</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.BLANK</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>CONSTANT.FALSE</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>CONSTANT.TRUE</name>
-        <rename/>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
-      <field>
-        <name>[Target.SplitOwnerId]</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OpportunitySplit.Id</name>
-        <rename>Migrated.OpptySplit.Id</rename>
-      </field>
-      <select_unspecified>N</select_unspecified>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -7424,7 +7821,38 @@ FROM Opportunity </query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4464</xloc>
+      <xloc>1328</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Wait for UPDATE Step</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      <step>
+        <name>SUCCESS - UPDATE - OpportunitySplit</name>
+        <CopyNr>0</CopyNr>
+      </step>
+    </steps>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>4528</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>

@@ -620,7 +620,7 @@ legacy records.</note>
     <hop>
       <from>SPLIT - UPSERT - OpportunitySplit</from>
       <to>UPDATE - OpportunitySplit</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>UPDATE - OpportunitySplit</from>

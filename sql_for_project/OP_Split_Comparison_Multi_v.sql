@@ -1,17 +1,13 @@
 /*
 	Who	When		What
     ===========================================================================
-    JZ	7/5/24		Initial view creation
-    JZ	7/8/24		Fixed issues with field naming.
-					Updated to only fields with values to edit
-	JZ	7/11/24 	Fixed Deal_Owner__c to SplitOwnerId field mapping
-    JZ	7/254/25	Updated mapping as I got new logic to find which Splits were singlular or multi
-					Eliminated fields in view that we would never be passing through ETL
+    JZ	7/24/24		Created new Multi-Split version of existing view as we can now tell which are which
+
     ===========================================================================
 */
 
 -- Comment out Create line when testing to not blow away working view
--- CREATE OR REPLACE VIEW OP_Split_Comparison__v AS
+-- CREATE OR REPLACE VIEW OP_Split_Comparison_Multi__v AS
 
 SELECT 
     LOS.`Source.CaseSafeID_OPSplit__c`,

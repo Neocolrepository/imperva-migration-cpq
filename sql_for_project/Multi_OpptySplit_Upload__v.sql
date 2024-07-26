@@ -2,7 +2,9 @@
 	Who	When		What
     ===========================================================================
     JZ	7/11/24		Initial view creation
-
+    JZ	7/24/24		Added Case statement for Sales_Team_Picklist__c
+	JZ	7/26/24		Removed Case statement as client opened up the picklist because they need the historical values
+					Dropped lines that had a 0 Split as these don't need to flow through.
     ===========================================================================
 */
 
@@ -11,40 +13,39 @@
 
 
 SELECT 
-	`op_split_comparison__v`.`Source.Id`,
-    `op_split_comparison__v`.`New.Id`,
-	`op_split_comparison__v`.`Source.Split__c`,
-    `op_split_comparison__v`.`New.SplitPercentage`,
-    `op_split_comparison__v`.`Source.Deal_Owner__c`,
-    `op_split_comparison__v`.`New.SplitOwnerId`,
-    `op_split_comparison__v`.`Source.Opportunity__c`,
-    `op_split_comparison__v`.`New.OpportunityId`,
-    `op_split_comparison__v`.`Source.Commissionable_Bookings__c`,
-    `op_split_comparison__v`.`New.Commissionable_Bookings__c`,
-    `op_split_comparison__v`.`Source.CreatedById`,
-    `op_split_comparison__v`.`Source.CreatedDate`,
-    `op_split_comparison__v`.`Source.Distributor_PAE__c`,
-    `op_split_comparison__v`.`New.Distributor_PAE__c`,
-    `op_split_comparison__v`.`Source.Reseller_PAE__c`,
-    `op_split_comparison__v`.`New.Reseller_PAE__c`,
-    `op_split_comparison__v`.`Source.First_Year_Split_Amount_Service__c`,
-    `op_split_comparison__v`.`New.Split_ACV__c`,
-    `op_split_comparison__v`.`Source.Region_Text__c`,
-    `op_split_comparison__v`.`New.Region_Text__c`,
-    `op_split_comparison__v`.`Source.Sales_Team_Picklist__c`,
-    `op_split_comparison__v`.`New.Sales_Team_Picklist__c`,
-	`op_split_comparison__v`.`Source.CaseSafeID_OPSplit__c`,
-    `op_split_comparison__v`.`New.CaseSafeID_OPSplit__c`,
-    `op_split_comparison__v`.`Source.Territory__c`,
-    `op_split_comparison__v`.`New.Territory__c`,
-    `op_split_comparison__v`.`Source.Trigger_Territory_Update__c`,
-    `op_split_comparison__v`.`New.Trigger_Territory_Update__c`
+	`Source.Id`,
+    `New.Id`,
+	`Source.Split__c`,
+    `New.SplitPercentage`,
+    `Source.Deal_Owner__c`,
+    `New.SplitOwnerId`,
+    `Source.Opportunity__c`,
+    `New.OpportunityId`,
+    `Source.Commissionable_Bookings__c`,
+    `New.Commissionable_Bookings__c`,
+    `Source.CreatedById`,
+    `Source.CreatedDate`,
+    `Source.Distributor_PAE__c`,
+    `New.Distributor_PAE__c`,
+    `Source.Reseller_PAE__c`,
+    `New.Reseller_PAE__c`,
+    `Source.First_Year_Split_Amount_Service__c`,
+    `New.Split_ACV__c`,
+    `Source.Region_Text__c`,
+    `New.Region_Text__c`,
+    `Source.Sales_Team_Picklist__c`,
+    `New.Sales_Team_Picklist__c`,
+	`Source.CaseSafeID_OPSplit__c`,
+    `New.CaseSafeID_OPSplit__c`,
+    `Source.Territory__c`,
+    `New.Territory__c`,
+    `Source.Trigger_Territory_Update__c`,
+    `New.Trigger_Territory_Update__c`
 
-FROM `op_split_comparison__v` 
+FROM `op_split_comparison_multi__v` 
+WHERE `Source.Id` IS NOT NULL
+AND `Source.Split__c` > 0
 
-WHERE `Source.Opportunity__c` IN (
-SELECT OpportunityId FROM MultiSplitOpps
-)
--- Meeded to match for Single Oppt Lines
--- AND `Source.Deal_Owner__c` = `New.SplitownerId`
+
+
  
