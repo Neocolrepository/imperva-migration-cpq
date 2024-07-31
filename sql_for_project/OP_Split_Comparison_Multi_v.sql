@@ -2,6 +2,7 @@
 	Who	When		What
     ===========================================================================
     JZ	7/24/24		Created new Multi-Split version of existing view as we can now tell which are which
+    JZ	7/28/24		Updated View to  tighten match by Deal_Owner = Split_Owner
 
     ===========================================================================
 */
@@ -117,9 +118,9 @@ SELECT
 		ELSE 'FALSE'
     END AS Trigger_Territory_Update_Match
 -- FROM `imperva_db`.`legacy_OpSplits` LOS
-FROM `ootb_OpSplits` OOTB
+FROM `legacy_OpSplits_multi` LOS
 
--- LEFT OUTER JOIN `ootb_OpSplits` OOTB
-LEFT OUTER JOIN `imperva_db`.`legacy_OpSplits_multi` LOS
-ON ( LOS.`Source.Opportunity__c` = OOTB.`New.OpportunityId`)
+LEFT OUTER JOIN `ootb_OpSplits` OOTB
+ON ( LOS.`Source.Opportunity__c` = OOTB.`New.OpportunityId` AND LOS.`Source.Deal_Owner__c` = OOTB.`New.SplitOwnerId`)
+WHERE `Source.Split__c` > 0
 ORDER BY `New.OpportunityId`

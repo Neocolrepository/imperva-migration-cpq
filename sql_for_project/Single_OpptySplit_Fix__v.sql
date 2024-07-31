@@ -19,31 +19,6 @@ SELECT
 --    `Source.Deal_Owner__c`,
 --    `New.SplitOwnerId`,
    `Source.Sales_Team_Picklist__c`,
-    CASE 
-		WHEN `Source.Sales_Team_Picklist__c` = 'APJ - ANZ IS' THEN 'Data Migration'
- 		WHEN `Source.Sales_Team_Picklist__c` = 'APJ - Financial Services' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'APJ - S Asia' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'APJ - SE Asia' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'APJ - SE Asia IS' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'CALA' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'NA - N Central' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'NA - Inside Sales' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'NA - S Central' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'NA - Southwest' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'NA - Pac NW' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - Central IS' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - Central' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - EE' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - North' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - North IS' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - South' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'EMEA - South IS' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'CALA' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'Distil' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'Prevoty' THEN 'Data Migration'
-		WHEN `Source.Sales_Team_Picklist__c` = 'Hoster' THEN 'Data Migration'
-        ELSE `Source.Sales_Team_Picklist__c`
-	END AS Source_Corrected_Sales_Team_Picklist,
     LOS.`Source.Opportunity__c`,
     OOTB.`New.OpportunityId`
 --    `Source.Commissionable_Bookings__c`,

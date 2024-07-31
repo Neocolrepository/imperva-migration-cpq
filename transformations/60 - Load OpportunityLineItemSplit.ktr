@@ -527,7 +527,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>READ - Legacy Opportunity_Product_Split__c</from>
+      <from>READ - Legacy OpportunityLineItemSplit (migrated)</from>
       <to>Dummy (do nothing).  2</to>
       <enabled>Y</enabled>
     </hop>
@@ -602,7 +602,7 @@
     </GUI>
   </step>
   <step>
-    <name>READ - Legacy Opportunity_Product_Split__c</name>
+    <name>READ - Legacy OpportunityLineItemSplit (migrated)</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>

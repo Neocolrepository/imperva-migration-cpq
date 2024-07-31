@@ -541,6 +541,31 @@
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
+    <notepad>
+      <note>***IMPORTANT***
+
+Must switch to API 61.0 for
+OpportunityProductSplit
+or it will not work</note>
+      <xloc>197</xloc>
+      <yloc>358</yloc>
+      <width>230</width>
+      <heigth>105</heigth>
+      <fontname>Tahoma</fontname>
+      <fontsize>16</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>254</fontcolorred>
+      <fontcolorgreen>255</fontcolorgreen>
+      <fontcolorblue>255</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>38</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <order>
     <hop>
@@ -621,7 +646,7 @@
     <hop>
       <from>SPLIT - INSERT - OpportunityLineItemSplit</from>
       <to>INSERT - OpportunityLineItemSplit</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>INSERT - OpportunityLineItemSplit</from>
@@ -3600,7 +3625,7 @@ etc</description>
     <salesforceIDFieldName>OpportunityLineItemSplit.Id</salesforceIDFieldName>
     <fields>
       <field>
-        <name>Legacy.Id</name>
+        <name>NEO_OpptyLISplit_Migration_External_ID__c</name>
         <field>Legacy.Id</field>
         <useExternalId>Y</useExternalId>
       </field>

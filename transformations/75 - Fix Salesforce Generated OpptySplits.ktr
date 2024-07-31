@@ -670,7 +670,7 @@ in case</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>READ - Multi_OpptySplit_Upload__v</from>
+      <from>READ - single__opptyspit_fix__v</from>
       <to>RETRY Setup</to>
       <enabled>Y</enabled>
     </hop>
@@ -1266,6 +1266,54 @@ in case</note>
         <length>-1</length>
         <precision>-1</precision>
       </field>
+      <field>
+        <name>Num of Errors</name>
+        <type>Integer</type>
+        <format>0</format>
+        <currency/>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Error Desc</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Error Field</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Error Code</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1496,7 +1544,7 @@ in case</note>
     <lookup>
       <key>
         <name>Source.Id</name>
-        <field>migrated.NEO_OpptySplit_Migration_External_ID__c</field>
+        <field>migrated.NEO_OpptySplit_Migration_External_Id__c</field>
       </key>
       <value>
         <name>Migrated.OpptySplit.Id</name>
@@ -1545,7 +1593,7 @@ in case</note>
     </GUI>
   </step>
   <step>
-    <name>READ - Multi_OpptySplit_Upload__v</name>
+    <name>READ - single__opptyspit_fix__v</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1754,27 +1802,21 @@ FROM single_opptysplit_fix__v
     <fields>
       <field>
         <name>Source.Id</name>
-        <rename/>
       </field>
       <field>
         <name>New.Id</name>
-        <rename/>
       </field>
       <field>
         <name>Source.Sales_Team_Picklist__c</name>
-        <rename/>
       </field>
       <field>
         <name>Source.Opportunity__c</name>
-        <rename/>
       </field>
       <field>
         <name>New.OpportunityId</name>
-        <rename/>
       </field>
       <field>
         <name>Opportunity.Id</name>
-        <rename/>
       </field>
       <field>
         <name>OpportunitySplit.Id</name>
@@ -1810,31 +1852,24 @@ FROM single_opptysplit_fix__v
     <fields>
       <field>
         <name>Source.Id</name>
-        <rename/>
       </field>
       <field>
         <name>New.Id</name>
-        <rename/>
       </field>
       <field>
         <name>Source.Sales_Team_Picklist__c</name>
-        <rename/>
       </field>
       <field>
         <name>Source.Opportunity__c</name>
-        <rename/>
       </field>
       <field>
         <name>New.OpportunityId</name>
-        <rename/>
       </field>
       <field>
         <name>Opportunity.Id</name>
-        <rename/>
       </field>
       <field>
         <name>Migrated.OpptySplit.Id</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1863,9 +1898,9 @@ FROM single_opptysplit_fix__v
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>Product2</module>
@@ -1932,9 +1967,9 @@ FROM Opportunity </query>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunitySplit</module>
@@ -2153,6 +2188,18 @@ FROM Opportunity </query>
         <precision>-1</precision>
       </field>
       <field>
+        <name>Source.Sales_Team_Picklist__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>Source.Opportunity__c</name>
         <type>String</type>
         <format/>
@@ -2226,9 +2273,9 @@ FROM Opportunity </query>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunitySplit</module>

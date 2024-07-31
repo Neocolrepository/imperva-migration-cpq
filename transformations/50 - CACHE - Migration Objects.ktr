@@ -608,52 +608,52 @@
     <hop>
       <from>Dummy (do nothing)</from>
       <to>DB - legacy_opportunities</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Salesforce input</from>
       <to>Dummy (do nothing)</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Dummy (do nothing) </from>
       <to>DB - legacy_OpSplits_Single</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>READ - OpportunitySplit__c</from>
+      <from>READ - OpportunitySplit__c Single</from>
       <to>Dummy (do nothing) </to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Dummy (do nothing). </from>
       <to>DB - OOTB Splits</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>READ - OOTB OpportunitySplit</from>
       <to>Dummy (do nothing). </to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Dummy (do nothing)  2</from>
-      <to>DB - legacy_OpSplits_multi</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>READ - OpportunitySplit__c 2</from>
-      <to>Dummy (do nothing)  2</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Dummy (do nothing).  2</from>
-      <to>DB - legacy_oli_splits</to>
       <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dummy (do nothing)   </from>
+      <to>DB - legacy_OpSplits_multi</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>READ - OpportunitySplit__c Multi</from>
+      <to>Dummy (do nothing)   </to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dummy (do nothing).    </from>
+      <to>DB - legacy_oli_splits</to>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>READ - Legacy Opportunity_Product_Split__c</from>
-      <to>Dummy (do nothing).  2</to>
-      <enabled>Y</enabled>
+      <to>Dummy (do nothing).    </to>
+      <enabled>N</enabled>
     </hop>
   </order>
   <step>
@@ -927,7 +927,7 @@
     </GUI>
   </step>
   <step>
-    <name>Dummy (do nothing)  2</name>
+    <name>Dummy (do nothing)   </name>
     <type>Dummy</type>
     <description/>
     <distribute>N</distribute>
@@ -977,7 +977,7 @@
     </GUI>
   </step>
   <step>
-    <name>Dummy (do nothing).  2</name>
+    <name>Dummy (do nothing).    </name>
     <type>Dummy</type>
     <description/>
     <distribute>N</distribute>
@@ -1012,9 +1012,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>N</useCompression>
     <module>OpportunitySplit</module>
@@ -1234,9 +1234,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>N</useCompression>
     <module>OpportunitySplit</module>
@@ -1968,7 +1968,7 @@ FROM OpportunitySplits
     </GUI>
   </step>
   <step>
-    <name>READ - OpportunitySplit__c</name>
+    <name>READ - OpportunitySplit__c Single</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1978,9 +1978,9 @@ FROM OpportunitySplits
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>N</useCompression>
     <module>OpportunitySplit__c</module>
@@ -2708,7 +2708,7 @@ AND Opportunity__r.Number_of_Splits__c = 1</condition>
     </GUI>
   </step>
   <step>
-    <name>READ - OpportunitySplit__c 2</name>
+    <name>READ - OpportunitySplit__c Multi</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2718,14 +2718,15 @@ AND Opportunity__r.Number_of_Splits__c = 1</condition>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>N</useCompression>
     <module>OpportunitySplit__c</module>
     <condition>CreatedDate >= LAST_N_DAYS:1825
- AND Opportunity__r.Number_of_Splits__c > 1</condition>
+ AND Opportunity__r.Number_of_Splits__c > 1
+ AND Split__c > 0</condition>
     <specifyQuery>N</specifyQuery>
     <query>CreatedDate >= LAST_N_DAYS:1825</query>
     <include_targeturl>N</include_targeturl>
@@ -3458,9 +3459,9 @@ AND Opportunity__r.Number_of_Splits__c = 1</condition>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>N</useCompression>
     <module>Account</module>
@@ -3525,7 +3526,7 @@ ORDER BY Id ASC</query>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
+      <xloc>208</xloc>
       <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>

@@ -12,7 +12,7 @@
 -- CREATE OR REPLACE VIEW Multi_OpptySplit_Upload__v AS
 
 
-SELECT 
+SELECT DISTINCT
 	`Source.Id`,
     `New.Id`,
 	`Source.Split__c`,
@@ -44,7 +44,7 @@ SELECT
 
 FROM `op_split_comparison_multi__v` 
 WHERE `Source.Id` IS NOT NULL
-AND `Source.Split__c` > 0
+ORDER BY `Source.Opportunity__c`
 
 
 
