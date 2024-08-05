@@ -612,6 +612,33 @@ and send it south, the rest go East.</note>
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
+    <notepad>
+      <note>We need to Block the Update from occurring
+until all of the new Records have been Inserted.
+
+Order of Operations for migrating Multi-Owner Splits:
+1) Insert new records for the additional people
+2) Update the already existing records for the
+owner who had already been added by SF.</note>
+      <xloc>3040</xloc>
+      <yloc>912</yloc>
+      <width>315</width>
+      <heigth>122</heigth>
+      <fontname>Tahoma</fontname>
+      <fontsize>13</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>0</backgroundcolorred>
+      <backgroundcolorgreen>249</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>mysql8</name>
@@ -815,17 +842,7 @@ and send it south, the rest go East.</note>
     <hop>
       <from>PIN - Contract Exists</from>
       <to>SUCCESS - INSERT - OpportunitySplit</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>SPLIT - UPSERT - OpportunitySplit</from>
-      <to>Wait for UPDATE Step</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Wait for UPDATE Step</from>
-      <to>INSERT - OpportunitySplit</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>REMOVE New.Field</from>
@@ -875,16 +892,11 @@ and send it south, the rest go East.</note>
     <hop>
       <from>Rename OpportunitySplit.Id</from>
       <to>SUCCESS - INSERT - OpportunitySplit</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>FILTER - Line ~ User 2</from>
       <to>Merge Rows 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>SORT - Opportunity.Id </from>
-      <to>UPDATE - OpportunitySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -925,6 +937,21 @@ and send it south, the rest go East.</note>
     <hop>
       <from>Records to Update</from>
       <to>LOOKUP - Line ~ User 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SPLIT - UPSERT - OpportunitySplit</from>
+      <to>INSERT - OpportunitySplit</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SORT - Opportunity.Id </from>
+      <to>Wait for INSERT Step</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Wait for INSERT Step</from>
+      <to>UPDATE - OpportunitySplit</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1630,7 +1657,7 @@ and send it south, the rest go East.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1264</xloc>
+      <xloc>1184</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3623,7 +3650,7 @@ and send it south, the rest go East.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3136</xloc>
+      <xloc>3536</xloc>
       <yloc>1216</yloc>
       <draw>Y</draw>
     </GUI>
@@ -6571,7 +6598,8 @@ FROM Opportunity </query>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunitySplit</module>
-    <condition> NEO_OpptySplit_Migration_External_ID__c != NULL</condition>
+    <condition> NEO_OpptySplit_Migration_External_ID__c != NULL
+ AND NEO_Migrated_Record__c = TRUE</condition>
     <specifyQuery>N</specifyQuery>
     <query/>
     <include_targeturl>N</include_targeturl>
@@ -6674,8 +6702,7 @@ SplitOwnerId,
 NEO_Migrated_Record__c, 
 NEO_OpptySplit_Migration_External_ID__c 
 FROM OpportunitySplit
-
-WHERE NEO_Migrated_Record__c = TRUE AND NEO_OpptySplit_Migration_External_ID__c != NULL</query>
+</query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
     <include_module>N</include_module>
@@ -8007,7 +8034,7 @@ WHERE NEO_Migrated_Record__c = TRUE AND NEO_OpptySplit_Migration_External_ID__c 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3440</xloc>
+      <xloc>3840</xloc>
       <yloc>1072</yloc>
       <draw>Y</draw>
     </GUI>
@@ -8097,13 +8124,13 @@ WHERE NEO_Migrated_Record__c = TRUE AND NEO_OpptySplit_Migration_External_ID__c 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3136</xloc>
+      <xloc>3536</xloc>
       <yloc>1072</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Wait for UPDATE Step</name>
+    <name>Wait for INSERT Step</name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -8115,7 +8142,7 @@ WHERE NEO_Migrated_Record__c = TRUE AND NEO_OpptySplit_Migration_External_ID__c 
     </partitioning>
     <steps>
       <step>
-        <name>SUCCESS - UPDATE - OpportunitySplit</name>
+        <name>INSERT - OpportunitySplit</name>
         <CopyNr>0</CopyNr>
       </step>
     </steps>
@@ -8128,8 +8155,8 @@ WHERE NEO_Migrated_Record__c = TRUE AND NEO_OpptySplit_Migration_External_ID__c 
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4528</xloc>
-      <yloc>512</yloc>
+      <xloc>3168</xloc>
+      <yloc>1072</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

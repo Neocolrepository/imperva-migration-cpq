@@ -639,11 +639,6 @@ or it will not work</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>FILTER - Line ~ OpportunityLIneItem</from>
-      <to>DEBUG - OppLineItem Check</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>SPLIT - INSERT - OpportunityLineItemSplit</from>
       <to>INSERT - OpportunityLineItemSplit</to>
       <enabled>Y</enabled>
@@ -654,16 +649,6 @@ or it will not work</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DEBUG - OppLineItem Check</from>
-      <to>SORT - OpportunityLineItem.Id</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>SORT - OpportunityLineItem.Id</from>
-      <to>FILTER - Skip Existing OppLineItemSplits?</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>INSERT - OpportunityLineItemSplit</from>
       <to>SUCCESS - INSERT - OpportunityLineItemSplit</to>
       <enabled>Y</enabled>
@@ -671,6 +656,21 @@ or it will not work</note>
     <hop>
       <from>READ - Opporunity_Product_Split__c</from>
       <to>RETRY</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>FILTER - Line ~ OpportunityLIneItem</from>
+      <to>SORT - Oppty+OpptyLineItem.Id</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SORT - Oppty+OpptyLineItem.Id</from>
+      <to>DEBUG - OppLineItem Check</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>DEBUG - OppLineItem Check</from>
+      <to>FILTER - Skip Existing OppLineItemSplits?</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -937,18 +937,6 @@ etc</description>
     </file>
     <fields>
       <field>
-        <name>Legacy.OppLineItemId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
         <name>Legacy.Id</name>
         <type>String</type>
         <format/>
@@ -961,8 +949,8 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Legacy.CreatedDate</name>
-        <type>Timestamp</type>
+        <name>Legacy.Case_Safe_ID__c</name>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
@@ -974,6 +962,42 @@ etc</description>
       </field>
       <field>
         <name>Legacy.CreatedById</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.CreatedDate</name>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Deal_Owner__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.OppLineItem.Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -997,19 +1021,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Legacy.Override_Split_Percentage__c</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Case_Safe_ID__c</name>
+        <name>Legacy.OppProd__r.Opportunity__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1021,19 +1033,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Legacy.Deal_Owner__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Product_Code__c</name>
+        <name>Legacy.OppProd__r.Opportunity_Line_Item__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1046,6 +1046,42 @@ etc</description>
       </field>
       <field>
         <name>Legacy.Opportunity_Split__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Product_Split__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Override_Split_Percentage__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Product_Code__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1258,7 +1294,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1728</xloc>
+      <xloc>1824</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1331,7 +1367,7 @@ etc</description>
     </file>
     <fields>
       <field>
-        <name>[Group: External ID]</name>
+        <name>Legacy.Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1343,7 +1379,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Group: Account: External ID]</name>
+        <name>Legacy.Case_Safe_ID__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1355,7 +1391,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Group: Account: Name]</name>
+        <name>Legacy.CreatedById</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1367,21 +1403,9 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Group: Currency ISO Code]</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Group: Start Date]</name>
+        <name>Legacy.CreatedDate</name>
         <type>Date</type>
-        <format>MM/dd/yyyy</format>
+        <format>yyyy-MM-dd</format>
         <currency/>
         <decimal/>
         <group/>
@@ -1391,31 +1415,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Group: End Date]</name>
-        <type>Date</type>
-        <format>MM/dd/yyyy</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Group: Term]</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Line: External ID]</name>
+        <name>Legacy.Deal_Owner__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1427,7 +1427,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Line: Product: External ID]</name>
+        <name>Legacy.DealOwnerId</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1439,7 +1439,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Line: Product: Product Name]</name>
+        <name>Legacy.OppLineItem.Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1451,55 +1451,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Line: Start Date]</name>
-        <type>Date</type>
-        <format>MM/dd/yyyy</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Line: End Date]</name>
-        <type>Date</type>
-        <format>MM/dd/yyyy</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Line: Term]</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Line: Quantity]</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Line: Currency ISO Code]</name>
+        <name>Legacy.Opportunity_Product__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1511,31 +1463,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>[Line: Unit Price]</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>[Line: Discount Amount]</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Scenario}</name>
+        <name>Legacy.OppProd__r.Opportunity__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1547,7 +1475,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>{Original: [Line: External ID]}</name>
+        <name>Legacy.OppProd__r.Opportunity_Line_Item__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1559,91 +1487,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>{Line: Is Bundle?}</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Option Level}</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Is Source Row?}</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Is Generated Row?}</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Is Possible Parent?}</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Is Possible Child?}</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: # Parents}</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Combine Key}</name>
+        <name>Legacy.Opportunity_Split__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1655,84 +1499,36 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>{Line: Context}</name>
+        <name>Legacy.Product_Split__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Override_Split_Percentage__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Product_Code__c</name>
         <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Arbitrary Child Found?}</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Required By: Combine Key}</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Required By: External ID}</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Required By: Product: Product Name}</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: Required By: Product: External ID}</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>{Line: #}</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
         <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
@@ -1823,7 +1619,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Product2.Id</name>
+        <name>OppLineItem.Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1835,7 +1631,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Product2.Name</name>
+        <name>OppLineItem.OpportunityId</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1847,7 +1643,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Product2.ProductCode</name>
+        <name>OppLineItem.Product2Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1859,7 +1655,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Product2.Description</name>
+        <name>OppLineItem.ProductCode</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -1871,1111 +1667,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Product2.IsActive</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.CreatedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.CreatedById</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.LastModifiedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.LastModifiedById</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SystemModstamp</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.Family</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.CurrencyIsoCode</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.ExternalDataSourceId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.ExternalId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.DisplayUrl</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.QuantityUnitOfMeasure</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.IsDeleted</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.LastViewedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.LastReferencedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.StockKeepingUnit</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__AssetAmendmentBehavior__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__AssetConversion__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__BatchQuantity__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__BillingFrequency__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__BillingType__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__BlockPricingField__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ChargeType__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__Component__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__CompoundDiscountRate__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfigurationEvent__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfigurationFieldSet__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfigurationFields__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfigurationFormTitle__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfigurationType__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfigurationValidator__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfiguredCodePattern__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ConfiguredDescriptionPattern__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__CostEditable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__CostSchedule__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__CustomConfigurationPage__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__CustomConfigurationRequired__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__CustomerCommunityAvailability__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DefaultPricingTable__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DefaultQuantity__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DescriptionLocked__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DiscountCategory__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DiscountSchedule__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DiscountSchedule__r.SBQQ__Type__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__DynamicPricingConstraint__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ExcludeFromMaintenance__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ExcludeFromOpportunity__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ExternallyConfigurable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__GenerateContractedPrice__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__HasConfigurationAttributes__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__Hidden__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__HidePriceInSearchResults__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__IncludeInMaintenance__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__NewQuoteGroup__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__NonDiscountable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__NonPartnerDiscountable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__OptionLayout__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__OptionSelectionMethod__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__Optional__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__PriceEditable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__PricingMethodEditable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__PricingMethod__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ProductPictureID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__QuantityEditable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__QuantityScale__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__ReconfigurationDisabled__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__RenewalProduct__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SortOrder__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__Specifications__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionBase__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionCategory__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionPercent__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionPricing__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionTarget__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionTerm__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__SubscriptionType__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__TaxCode__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__Taxable__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__TermDiscountLevel__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__TermDiscountSchedule__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__UpgradeCredit__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__UpgradeRatio__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__UpgradeSource__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__UpgradeTarget__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__HasConsumptionSchedule__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__EnableLargeConfiguration__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.SBQQ__PricingGuidance__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.Extras__c</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Product2.NEO_Product2_Migration_External_ID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Contract.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Contract.NEO_Contract_Migration_External_ID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Contract.Status</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Contract.OwnerId</name>
+        <name>OppLineItem.Name</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -2987,7 +1679,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Contract.AccountId</name>
+        <name>OppLineItem.Opportunity_Product__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -2999,21 +1691,9 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Contract.Account.Name</name>
+        <name>OppLineItem.ProductId__c</name>
         <type>String</type>
         <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Contract.CreatedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
         <currency/>
         <decimal/>
         <group/>
@@ -3023,21 +1703,9 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Contract.CreatedBy.Name</name>
+        <name>OppLineItem.Opportunity_Product_ID__c</name>
         <type>String</type>
         <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Contract.LastModifiedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
         <currency/>
         <decimal/>
         <group/>
@@ -3047,7 +1715,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Contract.LastModifiedBy.Name</name>
+        <name>OppLineItem.Opportunity_Product_Line_ID__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3059,7 +1727,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>number of errors</name>
+        <name>Num of Errors</name>
         <type>Integer</type>
         <format>0</format>
         <currency/>
@@ -3071,7 +1739,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>error descriptions</name>
+        <name>Error Desc</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3083,7 +1751,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>error fields</name>
+        <name>Error Field</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3095,7 +1763,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>error codes</name>
+        <name>Error Code</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3164,18 +1832,6 @@ etc</description>
     </file>
     <fields>
       <field>
-        <name>Legacy.OppLineItemId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
         <name>Legacy.Id</name>
         <type>String</type>
         <format/>
@@ -3188,8 +1844,8 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Legacy.CreatedDate</name>
-        <type>Timestamp</type>
+        <name>Legacy.Case_Safe_ID__c</name>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
@@ -3201,6 +1857,54 @@ etc</description>
       </field>
       <field>
         <name>Legacy.CreatedById</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.CreatedDate</name>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Deal_Owner__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.DealOwnerId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.OppLineItem.Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3224,19 +1928,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Legacy.Override_Split_Percentage__c</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Case_Safe_ID__c</name>
+        <name>Legacy.OppProd__r.Opportunity__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3248,19 +1940,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Legacy.Deal_Owner__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Product_Code__c</name>
+        <name>Legacy.OppProd__r.Opportunity_Line_Item__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3273,6 +1953,42 @@ etc</description>
       </field>
       <field>
         <name>Legacy.Opportunity_Split__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Product_Split__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Override_Split_Percentage__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Product_Code__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -3501,7 +2217,7 @@ etc</description>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>DEBUG - OppLineItem Check</send_true_to>
+    <send_true_to>SORT - Oppty+OpptyLineItem.Id</send_true_to>
     <send_false_to>FALLOUT - Line ⇎ OpportunityLineItem</send_false_to>
     <compare>
       <condition>
@@ -3610,14 +2326,14 @@ etc</description>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
-    <copies>1</copies>
+    <copies>16</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunityLineItemSplit</module>
@@ -3627,137 +2343,47 @@ etc</description>
       <field>
         <name>NEO_OpptyLISplit_Migration_External_ID__c</name>
         <field>Legacy.Id</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.Case_Safe_ID__c</name>
+        <name>Case_Safe_ID__c</name>
         <field>Legacy.Case_Safe_ID__c</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.CreatedById</name>
+        <name>CreatedById</name>
         <field>Legacy.CreatedById</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.CreatedDate</name>
+        <name>CreatedDate</name>
         <field>Legacy.CreatedDate</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.Deal_Owner__c</name>
-        <field>Legacy.Deal_Owner__c</field>
-        <useExternalId>Y</useExternalId>
+        <name>SplitOwnerId</name>
+        <field>Legacy.DealOwnerId</field>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.Opportunity_Product__c</name>
-        <field>Legacy.Opportunity_Product__c</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>Legacy.OppProd__r.Opportunity__c</name>
-        <field>Legacy.OppProd__r.Opportunity__c</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>Legacy.OppProd__r.Opportunity_Line_Item__c</name>
+        <name>OpportunityLineItemId</name>
         <field>Legacy.OppProd__r.Opportunity_Line_Item__c</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.Opportunity_Split__c</name>
-        <field>Legacy.Opportunity_Split__c</field>
-        <useExternalId>Y</useExternalId>
+        <name>SplitPercentage</name>
+        <field>Legacy.Product_Split__c</field>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>Legacy.Override_Split_Percentage__c</name>
-        <field>Legacy.Override_Split_Percentage__c</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>Legacy.Product_Code__c</name>
+        <name>Product_Code__c</name>
         <field>Legacy.Product_Code__c</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
       <field>
-        <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
-        <field>CONFIGURATION.RETRY.SKIP_EXISTING</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>CONSTANT.0</name>
-        <field>CONSTANT.0</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>CONSTANT.1</name>
-        <field>CONSTANT.1</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>CONSTANT.12</name>
-        <field>CONSTANT.12</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>CONSTANT.BLANK</name>
-        <field>CONSTANT.BLANK</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>CONSTANT.FALSE</name>
-        <field>CONSTANT.FALSE</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>CONSTANT.TRUE</name>
+        <name>NEO_Migrated_Record__c</name>
         <field>CONSTANT.TRUE</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.Id</name>
-        <field>OppLineItem.Id</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.OpportunityId</name>
-        <field>OppLineItem.OpportunityId</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.Product2Id</name>
-        <field>OppLineItem.Product2Id</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.ProductCode</name>
-        <field>OppLineItem.ProductCode</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.Name</name>
-        <field>OppLineItem.Name</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.Opportunity_Product__c</name>
-        <field>OppLineItem.Opportunity_Product__c</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.ProductId__c</name>
-        <field>OppLineItem.ProductId__c</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.Opportunity_Product_ID__c</name>
-        <field>OppLineItem.Opportunity_Product_ID__c</field>
-        <useExternalId>Y</useExternalId>
-      </field>
-      <field>
-        <name>OppLineItem.Opportunity_Product_Line_ID__c</name>
-        <field>OppLineItem.Opportunity_Product_Line_ID__c</field>
-        <useExternalId>Y</useExternalId>
+        <useExternalId>N</useExternalId>
       </field>
     </fields>
     <rollbackAllChangesOnError>N</rollbackAllChangesOnError>
@@ -3793,12 +2419,12 @@ etc</description>
     <integer_pair>N</integer_pair>
     <lookup>
       <key>
-        <name>Legacy.OppLineItemId</name>
-        <field>OppLineItem.Id</field>
-      </key>
-      <key>
         <name>Legacy.OppProd__r.Opportunity__c</name>
         <field>OppLineItem.OpportunityId</field>
+      </key>
+      <key>
+        <name>Legacy.OppProd__r.Opportunity_Line_Item__c</name>
+        <field>OppLineItem.Id</field>
       </key>
       <key>
         <name>Legacy.Product_Code__c</name>
@@ -3951,9 +2577,9 @@ etc</description>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>N</useCompression>
     <module>Account</module>
@@ -3965,15 +2591,19 @@ etc</description>
  CreatedById, 
  CreatedDate, 
  Deal_Owner__c,
+ Opportunity_Split__r.DealOwnerId__c,
+ Opportunity_Product__r.Id,
  Opportunity_Product__c, 
  Opportunity_Product__r.Opportunity__c,
  Opportunity_Product__r.Opportunity_Line_Item__c, 
- Opportunity_Split__c, Override_Split_Percentage__c, 
+ Opportunity_Split__c, 
+ Product_Split__c, 
+ Override_Split_Percentage__c,
  Product_Code__c
  FROM Opportunity_Product_Split__c
 
  WHERE CreatedDate >= LAST_N_DAYS:1825
- AND Override_Split_Percentage__c > 0
+ AND Product_Split__c > 0
 </query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
@@ -4039,7 +2669,7 @@ etc</description>
         <field>CreatedDate</field>
         <idlookup>N</idlookup>
         <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
+        <format>yyyy-MM-dd</format>
         <currency/>
         <decimal/>
         <group/>
@@ -4051,6 +2681,34 @@ etc</description>
       <field>
         <name>Legacy.Deal_Owner__c</name>
         <field>Deal_Owner__c</field>
+        <idlookup>N</idlookup>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Legacy.DealOwnerId</name>
+        <field>Opportunity_Split__r.DealOwnerId__c</field>
+        <idlookup>N</idlookup>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Legacy.OppLineItem.Id</name>
+        <field>Opportunity_Product__r.Id</field>
         <idlookup>N</idlookup>
         <type>String</type>
         <format/>
@@ -4109,6 +2767,20 @@ etc</description>
         <field>Opportunity_Split__c</field>
         <idlookup>N</idlookup>
         <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>Legacy.Product_Split__c</name>
+        <field>Product_Split__c</field>
+        <idlookup>N</idlookup>
+        <type>Number</type>
         <format/>
         <currency/>
         <decimal/>
@@ -4212,13 +2884,13 @@ etc</description>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunityLineItem</module>
-    <condition>CreatedDate >= LAST_N_DAYS:1825</condition>
+    <condition/>
     <specifyQuery>N</specifyQuery>
     <query/>
     <include_targeturl>N</include_targeturl>
@@ -4391,9 +3063,9 @@ etc</description>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunityLineItemSplit</module>
@@ -4468,7 +3140,7 @@ etc</description>
     </GUI>
   </step>
   <step>
-    <name>SORT - OpportunityLineItem.Id</name>
+    <name>SORT - Oppty+OpptyLineItem.Id</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -4487,7 +3159,15 @@ etc</description>
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>Legacy.OppLineItemId</name>
+        <name>OppLineItem.OpportunityId</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>OppLineItem.Id</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -4504,7 +3184,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1984</xloc>
+      <xloc>1408</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -4615,7 +3295,7 @@ etc</description>
       <field>
         <name>Legacy.CreatedDate</name>
         <type>Date</type>
-        <format>yyyy-MM-dd'T'HH:mm:ss'.000'XXX</format>
+        <format>yyyy-MM-dd</format>
         <currency/>
         <decimal/>
         <group/>
@@ -4626,6 +3306,30 @@ etc</description>
       </field>
       <field>
         <name>Legacy.Deal_Owner__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.DealOwnerId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.OppLineItem.Id</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -4676,6 +3380,18 @@ etc</description>
         <name>Legacy.Opportunity_Split__c</name>
         <type>String</type>
         <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Legacy.Product_Split__c</name>
+        <type>Number</type>
+        <format>0.#####</format>
         <currency/>
         <decimal/>
         <group/>
@@ -4913,7 +3629,7 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>OpportunityLineItem.Id</name>
+        <name>OpportunityLineItemSplit.Id</name>
         <type>String</type>
         <format/>
         <currency/>
