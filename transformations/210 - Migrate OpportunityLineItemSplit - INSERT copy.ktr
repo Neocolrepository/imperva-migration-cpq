@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>200 - Migrate Opportunity Product Splits - INSERT</name>
+    <name>200 - Migrate Opportunity Product Splits - UPSERT</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -437,7 +437,7 @@
   <notepads>
     <notepad>
       <note>Retry - OpportunityLineItemSplit</note>
-      <xloc>5104</xloc>
+      <xloc>3872</xloc>
       <yloc>448</yloc>
       <width>240</width>
       <heigth>29</heigth>
@@ -575,7 +575,7 @@ WHERE IsActive = TRUE</note>
     <notepad>
       <note>Find previously migrated records so that
 we can skip them when we retry.</note>
-      <xloc>4576</xloc>
+      <xloc>3344</xloc>
       <yloc>112</yloc>
       <width>241</width>
       <heigth>42</heigth>
@@ -702,7 +702,7 @@ so that we can get the correct SplitOwnerId</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SELECT - OpportunityLineItem (snip)</from>
+      <from>SELECT - OpportunityLineItem</from>
       <to>LOOKUP - Line ~ Product2</to>
       <enabled>Y</enabled>
     </hop>
@@ -722,7 +722,7 @@ so that we can get the correct SplitOwnerId</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SORT ROWS</from>
+      <from>SORT - Oppty+OpptyLineItem.Id</from>
       <to>DEBUG - OppLineItem Check</to>
       <enabled>Y</enabled>
     </hop>
@@ -747,7 +747,7 @@ so that we can get the correct SplitOwnerId</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SELECT - User (snip)</from>
+      <from>SELECT - User</from>
       <to>LOOKUP - Line ~ User</to>
       <enabled>Y</enabled>
     </hop>
@@ -764,6 +764,11 @@ so that we can get the correct SplitOwnerId</note>
     <hop>
       <from>FILTER - Line ~ OpportunityLIneItem</from>
       <to>JavaScript - 15->18 Char OwnerId</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>FILTER - Line ~ User</from>
+      <to>SORT - Oppty+OpptyLineItem.Id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -789,31 +794,6 @@ so that we can get the correct SplitOwnerId</note>
     <hop>
       <from>FILTER - Line ~ OpportunitySplit</from>
       <to>FALLOUT - Line ⇎ OpportunitySplit</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>SELECT - Opportunity (snip)</from>
-      <to>LOOKUP - Line ~ Opportunity</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>LOOKUP - Line ~ Opportunity</from>
-      <to>FILTER - Line ~ Opportunity</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>FILTER - Line ~ Opportunity</from>
-      <to>FALLOUT - Line ⇎ Opportunity</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>FILTER - Line ~ User</from>
-      <to>LOOKUP - Line ~ Opportunity</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>FILTER - Line ~ Opportunity</from>
-      <to>SORT ROWS</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -843,7 +823,7 @@ so that we can get the correct SplitOwnerId</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4880</xloc>
+      <xloc>3648</xloc>
       <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
@@ -924,7 +904,7 @@ so that we can get the correct SplitOwnerId</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4528</xloc>
+      <xloc>3296</xloc>
       <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1559,30 +1539,6 @@ etc</description>
         <length>-1</length>
         <precision>-1</precision>
       </field>
-      <field>
-        <name>Opportunity.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Opportunity.OwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1593,7 +1549,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3840</xloc>
+      <xloc>3024</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2134,30 +2090,6 @@ etc</description>
         <precision>-1</precision>
       </field>
       <field>
-        <name>Opportunity.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Opportunity.OwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
         <name>Num of Errors</name>
         <type>Integer</type>
         <format>0</format>
@@ -2215,7 +2147,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>5216</xloc>
+      <xloc>3984</xloc>
       <yloc>752</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2714,7 +2646,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4880</xloc>
+      <xloc>3648</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2758,7 +2690,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4528</xloc>
+      <xloc>3296</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2790,7 +2722,7 @@ etc</description>
       </field>
       <field>
         <name>SplitOwnerId</name>
-        <field>Opportunity.OwnerId</field>
+        <field>OpptySplit.SplitOwnerId</field>
         <useExternalId>N</useExternalId>
       </field>
       <field>
@@ -2829,7 +2761,7 @@ etc</description>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>5216</xloc>
+      <xloc>3984</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2919,7 +2851,7 @@ for(var x = 0; x &lt; y.length; x++)
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>SELECT - OpportunityLineItem (snip)</from>
+    <from>SELECT - OpportunityLineItem</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
@@ -2934,8 +2866,8 @@ for(var x = 0; x &lt; y.length; x++)
         <field>OppLineItem.Id</field>
       </key>
       <key>
-        <name>Legacy.Opportunity_Product__c</name>
-        <field>OppLineItem.Opportunity_Product__c</field>
+        <name>Legacy.Product_Code__c</name>
+        <field>OppLineItem.ProductCode</field>
       </key>
       <value>
         <name>OppLineItem.Id</name>
@@ -3043,7 +2975,7 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4528</xloc>
+      <xloc>3296</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3068,7 +3000,7 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>5632</xloc>
+      <xloc>4400</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3381,7 +3313,7 @@ for(var x = 0; x &lt; y.length; x++)
     </GUI>
   </step>
   <step>
-    <name>SELECT - OpportunityLineItem (snip)</name>
+    <name>SELECT - OpportunityLineItem</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -3641,13 +3573,13 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4528</xloc>
+      <xloc>3296</xloc>
       <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>SORT ROWS</name>
+    <name>SORT - Oppty+OpptyLineItem.Id</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -3689,14 +3621,6 @@ for(var x = 0; x &lt; y.length; x++)
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
-      <field>
-        <name>Opportunity.OwnerId</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -3707,7 +3631,7 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>3472</xloc>
+      <xloc>2784</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3732,7 +3656,7 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>4880</xloc>
+      <xloc>3648</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -4248,30 +4172,6 @@ for(var x = 0; x &lt; y.length; x++)
         <precision>-1</precision>
       </field>
       <field>
-        <name>Opportunity.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Opportunity.OwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
         <name>OpportunityLineItemSplit.Id</name>
         <type>String</type>
         <format/>
@@ -4293,7 +4193,7 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>5632</xloc>
+      <xloc>4400</xloc>
       <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
@@ -4338,13 +4238,13 @@ for(var x = 0; x &lt; y.length; x++)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>5280</xloc>
+      <xloc>4048</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>SELECT - User (snip)</name>
+    <name>SELECT - User</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -4451,7 +4351,7 @@ for(var x = 0; x &lt; y.length; x++)
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>SELECT - User (snip)</from>
+    <from>SELECT - User</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
@@ -4505,7 +4405,7 @@ for(var x = 0; x &lt; y.length; x++)
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>LOOKUP - Line ~ Opportunity</send_true_to>
+    <send_true_to>SORT - Oppty+OpptyLineItem.Id</send_true_to>
     <send_false_to>REVIEW - Inactive Users</send_false_to>
     <compare>
       <condition>
@@ -5079,7 +4979,7 @@ for(var x = 0; x &lt; y.length; x++)
     <condition/>
     <specifyQuery>Y</specifyQuery>
     <query>SELECT Id, Deal_Owner__c, NEO_OpptySplit_Migration_External_ID__c,
-	OpportunityId, SplitOwnerId, SplitPercentage
+	OpportunityId, SplitOwnerId
 FROM OpportunitySplit</query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
@@ -5168,20 +5068,6 @@ FROM OpportunitySplit</query>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
       </field>
-      <field>
-        <name>OpptySplit.SplitPercentage</name>
-        <field>SplitPercentage</field>
-        <idlookup>N</idlookup>
-        <type>Number</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
     </fields>
     <limit>0</limit>
     <attributes/>
@@ -5220,8 +5106,8 @@ FROM OpportunitySplit</query>
         <field>OpptySplit.OpportunityId</field>
       </key>
       <key>
-        <name>DealOwnerID_18</name>
-        <field>OpptySplit.SplitOwnerId</field>
+        <name>Legacy.Opportunity_Split__c</name>
+        <field>NEO_OpptySplit_Migration_External_ID__c</field>
       </key>
       <value>
         <name>OpptySplit.Id</name>
@@ -5783,729 +5669,6 @@ FROM OpportunitySplit</query>
     <GUI>
       <xloc>1984</xloc>
       <yloc>752</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>SELECT - Opportunity (snip)</name>
-    <type>SalesforceInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <targeturl>${SF_IMPERVA_URL}</targeturl>
-    <username>${SF_IMPERVA_USERNAME}</username>
-    <password>${SF_IMPERVA_PASSWORD}</password>
-    <timeout>60000</timeout>
-    <useCompression>Y</useCompression>
-    <module>User</module>
-    <condition>IsActive = TRUE </condition>
-    <specifyQuery>Y</specifyQuery>
-    <query>SELECT Id, OwnerId
-FROM Opportunity</query>
-    <include_targeturl>N</include_targeturl>
-    <targeturl_field/>
-    <include_module>N</include_module>
-    <module_field/>
-    <include_rownum>N</include_rownum>
-    <include_deletion_date>N</include_deletion_date>
-    <deletion_date_field/>
-    <rownum_field/>
-    <include_sql>N</include_sql>
-    <sql_field/>
-    <include_Timestamp>N</include_Timestamp>
-    <timestamp_field/>
-    <read_from/>
-    <read_to/>
-    <records_filter>all</records_filter>
-    <queryAll>N</queryAll>
-    <fields>
-      <field>
-        <name>Opportunity.Id</name>
-        <field>Id</field>
-        <idlookup>N</idlookup>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>Opportunity.OwnerId</name>
-        <field>OwnerId</field>
-        <idlookup>N</idlookup>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>2896</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>LOOKUP - Line ~ Opportunity</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>SELECT - Opportunity (snip)</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>Legacy.OppProd__r.Opportunity__c</name>
-        <field>Opportunity.Id</field>
-      </key>
-      <key>
-        <name>DealOwnerID_18</name>
-        <field>Opportunity.OwnerId</field>
-      </key>
-      <value>
-        <name>Opportunity.Id</name>
-        <rename>Opportunity.Id</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>Opportunity.OwnerId</name>
-        <rename>Opportunity.OwnerId</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>2896</xloc>
-      <yloc>592</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>FILTER - Line ~ Opportunity</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>SORT ROWS</send_true_to>
-    <send_false_to>FALLOUT - Line ⇎ Opportunity</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <conditions>
-          <condition>
-            <negated>N</negated>
-            <leftvalue>Opportunity.Id</leftvalue>
-            <function>IS NOT NULL</function>
-            <rightvalue/>
-          </condition>
-        </conditions>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>3088</xloc>
-      <yloc>592</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>FALLOUT - Line ⇎ Opportunity</name>
-    <type>TextFileOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>Y</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - Line ⇎ Opportunity</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>csv</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>Legacy.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Case_Safe_ID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.CreatedById</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.CreatedDate</name>
-        <type>Date</type>
-        <format>yyyy-MM-dd</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Deal_Owner__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy_DealOwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.OppLineItem.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Opportunity_Product__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.OppProd__r.Opportunity__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.OppProd__r.Opportunity_Line_Item__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Opportunity_Split__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Product_Split__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Override_Split_Percentage__c</name>
-        <type>Number</type>
-        <format>0.#####</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Legacy.Product_Code__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONFIGURATION.RETRY.SKIP_EXISTING</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.0</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.1</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.12</name>
-        <type>Integer</type>
-        <format>0</format>
-        <currency/>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.BLANK</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.FALSE</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.TRUE</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>CONSTANT.SplitTypeId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.OpportunityId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.Product2Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.ProductCode</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.Name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.Opportunity_Product__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.ProductId__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.Opportunity_Product_ID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OppLineItem.Opportunity_Product_Line_ID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>DealOwnerID_18</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OpptySplit.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>NEO_OpptySplit_Migration_External_ID__c</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OpptySplit.OpportunityId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>OpptySplit.SplitOwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>User.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>User.Name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>User.IsActive</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Opportunity.Id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Opportunity.OwnerId</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>3088</xloc>
-      <yloc>704</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

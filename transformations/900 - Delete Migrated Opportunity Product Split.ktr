@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Active Contracts - # - Delete Migrated Contracts - DELETE - Contract</name>
+    <name>900  - Delete Migrated Opportunity Product Split</name>
     <description>© 2024 Neocol - Client Confidential.</description>
     <extended_description/>
     <trans_version/>
@@ -459,28 +459,28 @@
   </notepads>
   <order>
     <hop>
-      <from>CACHE - SELECT - Migrated Contracts</from>
-      <to>DELETE - Migrated Contracts</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>DELETE - Migrated Contracts</from>
-      <to>FALLOUT - DELETE - Migrated Contracts</to>
+      <from>CACHE - SELECT - Migrated OpportunityLineItemSplit</from>
+      <to>DELETE - Migrated OpportunityLineItemSplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>DELETE - Migrated Contracts</from>
-      <to>SUCCESS - DELETE - Migrated Contracts</to>
+      <from>DELETE - Migrated OpportunityLineItemSplit</from>
+      <to>FALLOUT - DELETE - Migrated OpportunityLineItemSplit</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>DELETE - Migrated OpportunityLineItemSplit</from>
+      <to>SUCCESS - DELETE - Migrated OpportunityLineItemSplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SELECT - Migrated OpptyLineItemSplit</from>
-      <to>CACHE - SELECT - Migrated Contracts</to>
+      <to>CACHE - SELECT - Migrated OpportunityLineItemSplit</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>CACHE - SELECT - Migrated Contracts</name>
+    <name>CACHE - SELECT - Migrated OpportunityLineItemSplit</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -504,7 +504,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/CACHE/CACHE - SELECT - Migrated Contracts</name>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/CACHE/CACHE - SELECT - Migrated OpportunityLineItemSplit</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -523,6 +523,30 @@
     <fields>
       <field>
         <name>Id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>NEO_Migrated_Record__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>NEO_OpptyLISplit_Migration_External_ID__c</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -549,24 +573,24 @@
     </GUI>
   </step>
   <step>
-    <name>DELETE - Migrated Contracts</name>
+    <name>DELETE - Migrated OpportunityLineItemSplit</name>
     <type>SalesforceDelete</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
-    <copies>1</copies>
+    <copies>16</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_NEO__CPQ__URL}</targeturl>
-    <username>${SF_NEO__CPQ__USERNAME}</username>
-    <password>${SF_NEO__CPQ__PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
-    <module>Contract</module>
+    <module>OpportunityLineItemSplit</module>
     <DeleteField>Id</DeleteField>
-    <batchSize>1</batchSize>
+    <batchSize>10</batchSize>
     <rollbackAllChangesOnError>N</rollbackAllChangesOnError>
     <attributes/>
     <cluster_schema/>
@@ -583,7 +607,7 @@
     </GUI>
   </step>
   <step>
-    <name>FALLOUT - DELETE - Migrated Contracts</name>
+    <name>FALLOUT - DELETE - Migrated OpportunityLineItemSplit</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -607,7 +631,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - DELETE - Migrated Contracts</name>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/FALLOUT/FALLOUT - DELETE - Migrated OpportunityLineItemSplit</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -637,16 +661,40 @@
         <precision>-1</precision>
       </field>
       <field>
+        <name>NEO_Migrated_Record__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>NEO_OpptyLISplit_Migration_External_ID__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>number of errors</name>
         <type>Integer</type>
-        <format>####0;-####0</format>
+        <format>0</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>3</length>
-        <precision>0</precision>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>error descriptions</name>
@@ -656,7 +704,7 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -668,7 +716,7 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -680,7 +728,7 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -710,9 +758,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_DEV_URL}</targeturl>
-    <username>${SF_IMPERVA_DEV_USERNAME}</username>
-    <password>${SF_IMPERVA_DEV_PASSWORD}</password>
+    <targeturl>${SF_IMPERVA_URL}</targeturl>
+    <username>${SF_IMPERVA_USERNAME}</username>
+    <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
     <useCompression>Y</useCompression>
     <module>OpportunityLineItemSplit</module>
@@ -720,7 +768,9 @@
 </condition>
     <specifyQuery>Y</specifyQuery>
     <query>SELECT Id, NEO_Migrated_Record__c, NEO_OpptyLISplit_Migration_External_ID__c
- FROM OpportunityLineItemSplit</query>
+ FROM OpportunityLineItemSplit
+ WHERE NEO_Migrated_Record__c = TRUE 
+ AND NEO_OpptyLISplit_Migration_External_ID__c != NULL</query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
     <include_module>N</include_module>
@@ -738,6 +788,48 @@
     <records_filter>all</records_filter>
     <queryAll>N</queryAll>
     <fields>
+      <field>
+        <name>Id</name>
+        <field>Id</field>
+        <idlookup>N</idlookup>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>NEO_Migrated_Record__c</name>
+        <field>NEO_Migrated_Record__c</field>
+        <idlookup>N</idlookup>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>NEO_OpptyLISplit_Migration_External_ID__c</name>
+        <field>NEO_OpptyLISplit_Migration_External_ID__c</field>
+        <idlookup>N</idlookup>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
     </fields>
     <limit>0</limit>
     <attributes/>
@@ -755,7 +847,7 @@
     </GUI>
   </step>
   <step>
-    <name>SUCCESS - DELETE - Migrated Contracts</name>
+    <name>SUCCESS - DELETE - Migrated OpportunityLineItemSplit</name>
     <type>TextFileOutput</type>
     <description/>
     <distribute>N</distribute>
@@ -779,7 +871,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/SUCCESS/SUCCESS - DELETE - Migrated Contracts</name>
+      <name>${SF_NEO__CPQ__OUTPUT}/${Internal.Transformation.Name}/SUCCESS/SUCCESS - DELETE - Migrated OpportunityLineItemSplit</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -808,6 +900,30 @@
         <length>-1</length>
         <precision>-1</precision>
       </field>
+      <field>
+        <name>NEO_Migrated_Record__c</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>NEO_OpptyLISplit_Migration_External_ID__c</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -825,8 +941,8 @@
   </step>
   <step_error_handling>
     <error>
-      <source_step>DELETE - Migrated Contracts</source_step>
-      <target_step>FALLOUT - DELETE - Migrated Contracts</target_step>
+      <source_step>DELETE - Migrated OpportunityLineItemSplit</source_step>
+      <target_step>FALLOUT - DELETE - Migrated OpportunityLineItemSplit</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename>number of errors</nr_valuename>
       <descriptions_valuename>error descriptions</descriptions_valuename>

@@ -501,38 +501,33 @@
     </hop>
     <hop>
       <from>FILTER - Line ~ OpportunityLIneItem</from>
-      <to>Matching Oppty</to>
+      <to>LOOKUP - Line ~ OpptySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>READ - Oppurtunity 2</from>
-      <to>LOOKUP - Line ~ Opportunity 2</to>
+      <from>SELECT - OpportunitySplit (migrated)</from>
+      <to>LOOKUP - Line ~ OpptySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>READ - OpptyLineItem 2</from>
-      <to>LOOKUP - Line ~ Opportunity 2</to>
+      <from>LOOKUP - Line ~ OpptySplit</from>
+      <to>FILTER - Line ~ OpportunitySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>LOOKUP - Line ~ Opportunity 2</from>
-      <to>FILTER - Line ~ OpportunityLIneItem 2</to>
+      <from>FILTER - Line ~ OpportunitySplit</from>
+      <to>Matching OpptySplit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>FILTER - Line ~ OpportunityLIneItem 2</from>
-      <to>No Matching Opp 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>FILTER - Line ~ OpportunityLIneItem 2</from>
-      <to>Matching Oppty 2</to>
+      <from>FILTER - Line ~ OpportunitySplit</from>
+      <to>No Mathing OpptySplit</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>READ - Oppurtunity</name>
-    <type>SalesforceInput</type>
+    <name>FILTER - Line ~ OpportunityLIneItem</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -541,52 +536,58 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <targeturl>${SF_IMPERVA_URL}</targeturl>
-    <username>${SF_IMPERVA_USERNAME}</username>
-    <password>${SF_IMPERVA_PASSWORD}</password>
-    <timeout>60000</timeout>
-    <useCompression>N</useCompression>
-    <module>OpportunitySplit</module>
-    <condition/>
-    <specifyQuery>Y</specifyQuery>
-    <query>SELECT Id 
-FROM Opportunity 
-WHERE Number_of_Splits__c = 1 
-AND Id = '0061300001CtlqsAAB'
-</query>
-    <include_targeturl>N</include_targeturl>
-    <targeturl_field/>
-    <include_module>N</include_module>
-    <module_field/>
-    <include_rownum>N</include_rownum>
-    <include_deletion_date>N</include_deletion_date>
-    <deletion_date_field/>
-    <rownum_field/>
-    <include_sql>N</include_sql>
-    <sql_field/>
-    <include_Timestamp>N</include_Timestamp>
-    <timestamp_field/>
-    <read_from/>
-    <read_to/>
-    <records_filter>all</records_filter>
-    <queryAll>N</queryAll>
-    <fields>
-      <field>
+    <send_true_to>LOOKUP - Line ~ OpptySplit</send_true_to>
+    <send_false_to>No Matching Opp</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>OLI.Id</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>704</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>LOOKUP - Line ~ Opportunity</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>READ - Oppurtunity</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>OLI.OpportunityId</name>
+        <field>Opportunity.Id</field>
+      </key>
+      <value>
         <name>Opportunity.Id</name>
-        <field>Id</field>
-        <idlookup>N</idlookup>
+        <rename>Opportunity.Id</rename>
+        <default/>
         <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
+      </value>
+    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -597,7 +598,57 @@ AND Id = '0061300001CtlqsAAB'
     </remotesteps>
     <GUI>
       <xloc>464</xloc>
-      <yloc>144</yloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Matching OpptySplit</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1328</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>No Matching Opp</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>704</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -713,134 +764,7 @@ AND Id = '0061300001CtlqsAAB'
     </GUI>
   </step>
   <step>
-    <name>LOOKUP - Line ~ Opportunity</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>READ - Oppurtunity</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>OLI.OpportunityId</name>
-        <field>Opportunity.Id</field>
-      </key>
-      <value>
-        <name>Opportunity.Id</name>
-        <rename>Opportunity.Id</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>FILTER - Line ~ OpportunityLIneItem</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>Matching Oppty</send_true_to>
-    <send_false_to>No Matching Opp</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>OLI.Id</leftvalue>
-        <function>IS NOT NULL</function>
-        <rightvalue/>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>No Matching Opp</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>480</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Matching Oppty</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>READ - Oppurtunity 2</name>
+    <name>READ - Oppurtunity</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -860,8 +784,7 @@ AND Id = '0061300001CtlqsAAB'
     <specifyQuery>Y</specifyQuery>
     <query>SELECT Id 
 FROM Opportunity 
-WHERE Number_of_Splits__c = 1 
-AND Id = '0061300001CtlqsAAB'
+WHERE Id = '0061300001CtlqsAAB'
 </query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
@@ -906,12 +829,12 @@ AND Id = '0061300001CtlqsAAB'
     </remotesteps>
     <GUI>
       <xloc>464</xloc>
-      <yloc>640</yloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>READ - OpptyLineItem 2</name>
+    <name>SELECT - OpportunitySplit (migrated)</name>
     <type>SalesforceInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -925,13 +848,13 @@ AND Id = '0061300001CtlqsAAB'
     <username>${SF_IMPERVA_USERNAME}</username>
     <password>${SF_IMPERVA_PASSWORD}</password>
     <timeout>60000</timeout>
-    <useCompression>N</useCompression>
+    <useCompression>Y</useCompression>
     <module>OpportunitySplit</module>
     <condition/>
     <specifyQuery>Y</specifyQuery>
-    <query>SELECT Id, Name, ProductCode, OpportunityId
- FROM OpportunityLineItem
- WHERE OpportunityId = '0061300001CtlqsAAB'</query>
+    <query>SELECT Id, Deal_Owner__c, NEO_OpptySplit_Migration_External_ID__c,
+	OpportunityId, SplitOwnerId, SplitPercentage
+FROM OpportunitySplit</query>
     <include_targeturl>N</include_targeturl>
     <targeturl_field/>
     <include_module>N</include_module>
@@ -950,7 +873,7 @@ AND Id = '0061300001CtlqsAAB'
     <queryAll>N</queryAll>
     <fields>
       <field>
-        <name>OLI.Id</name>
+        <name>OpptySplit.Id</name>
         <field>Id</field>
         <idlookup>N</idlookup>
         <type>String</type>
@@ -964,8 +887,8 @@ AND Id = '0061300001CtlqsAAB'
         <repeat>N</repeat>
       </field>
       <field>
-        <name>OLI.Name</name>
-        <field>Name</field>
+        <name>OpptySplit.Deal_Owner__c</name>
+        <field>Deal_Owner__c</field>
         <idlookup>N</idlookup>
         <type>String</type>
         <format/>
@@ -978,8 +901,8 @@ AND Id = '0061300001CtlqsAAB'
         <repeat>N</repeat>
       </field>
       <field>
-        <name>OLI.ProductCode</name>
-        <field>ProductCode</field>
+        <name>NEO_OpptySplit_Migration_External_ID__c</name>
+        <field>NEO_OpptySplit_Migration_External_ID__c</field>
         <idlookup>N</idlookup>
         <type>String</type>
         <format/>
@@ -992,10 +915,38 @@ AND Id = '0061300001CtlqsAAB'
         <repeat>N</repeat>
       </field>
       <field>
-        <name>OLI.OpportunityId</name>
+        <name>OpptySplit.OpportunityId</name>
         <field>OpportunityId</field>
         <idlookup>N</idlookup>
         <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>OpptySplit.SplitOwnerId</name>
+        <field>SplitOwnerId</field>
+        <idlookup>N</idlookup>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>OpptySplit.SplitPercentage</name>
+        <field>SplitPercentage</field>
+        <idlookup>N</idlookup>
+        <type>Number</type>
         <format/>
         <currency/>
         <decimal/>
@@ -1016,13 +967,13 @@ AND Id = '0061300001CtlqsAAB'
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>752</yloc>
+      <xloc>944</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>LOOKUP - Line ~ Opportunity 2</name>
+    <name>LOOKUP - Line ~ OpptySplit</name>
     <type>StreamLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -1032,7 +983,7 @@ AND Id = '0061300001CtlqsAAB'
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>READ - Oppurtunity</from>
+    <from>SELECT - OpportunitySplit (migrated)</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
@@ -1040,11 +991,33 @@ AND Id = '0061300001CtlqsAAB'
     <lookup>
       <key>
         <name>OLI.OpportunityId</name>
-        <field>Opportunity.Id</field>
+        <field>OpptySplit.OpportunityId</field>
+      </key>
+      <key>
+        <name>DealOwnerID_18</name>
+        <field>OpptySplit.SplitOwnerId</field>
       </key>
       <value>
-        <name>Opportunity.Id</name>
-        <rename>Opportunity.Id</rename>
+        <name>OpptySplit.Id</name>
+        <rename>OpptySplit.Id</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>NEO_OpptySplit_Migration_External_ID__c</name>
+        <rename>NEO_OpptySplit_Migration_External_ID__c</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>OpptySplit.OpportunityId</name>
+        <rename>OpptySplit.OpportunityId</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>OpptySplit.SplitOwnerId</name>
+        <rename>OpptySplit.SplitOwnerId</rename>
         <default/>
         <type>String</type>
       </value>
@@ -1058,13 +1031,13 @@ AND Id = '0061300001CtlqsAAB'
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>752</yloc>
+      <xloc>944</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>FILTER - Line ~ OpportunityLIneItem 2</name>
+    <name>FILTER - Line ~ OpportunitySplit</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -1074,12 +1047,12 @@ AND Id = '0061300001CtlqsAAB'
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>Matching Oppty</send_true_to>
-    <send_false_to>No Matching Opp</send_false_to>
+    <send_true_to>LOOKUP - Line ~ OpptySplit</send_true_to>
+    <send_false_to>No Mathing OpptySplit</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
-        <leftvalue>OLI.Id</leftvalue>
+        <leftvalue>OpptySplit.Id</leftvalue>
         <function>IS NOT NULL</function>
         <rightvalue/>
       </condition>
@@ -1093,13 +1066,13 @@ AND Id = '0061300001CtlqsAAB'
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>752</yloc>
+      <xloc>1152</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>No Matching Opp 2</name>
+    <name>No Mathing OpptySplit</name>
     <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
@@ -1118,33 +1091,8 @@ AND Id = '0061300001CtlqsAAB'
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>976</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Matching Oppty 2</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>752</yloc>
+      <xloc>1152</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
